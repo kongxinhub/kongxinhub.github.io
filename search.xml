@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>test</title>
+    <url>/test.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/hello-world.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+</search>
