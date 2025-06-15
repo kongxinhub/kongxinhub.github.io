@@ -139,3 +139,9 @@ symbols_count_time:
   # wpm – 每分钟阅读字数（Words Per Minute）。默认为275
   wpm: 275
   suffix: "mins."
+
+excerpt:
+depth: 1
+excerpt_excludes: []
+more_excludes: []
+hideWholePostExcerpts: true
