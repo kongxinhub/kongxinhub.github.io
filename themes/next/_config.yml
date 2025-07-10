@@ -727,8 +727,8 @@ gitalk:
   enable: true
   github_id: kongxinhub # GitHub repo owner
   repo: kxtalk # Repository name to store issues
-  client_id: Iv23li1UGXBYOeKSvbFp # GitHub Application Client ID
-  client_secret: 84af9aa6c6b3baa1aa5f9a4eb8d08fc29dafaae6 # GitHub Application Client Secret
+  client_id: Ov23liF92RyBCz8lpgux # GitHub Application Client ID
+  client_secret: f649a253ec9e0b1bfc50c8c205ba6df82b3b2057 # GitHub Application Client Secret
   admin_user: kongxinhub # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # When the official proxy is not available, you can change it to your own proxy address
