@@ -54,7 +54,7 @@ npm install              // 安装必要组件
     - package-lock.json  
 
 此时输入 hexo g (hexo generate) 即可生成 hexo 的默认静态页面， 然后输入 hexo s (hexo server)即可打开本地服务器, 然后浏览器访问 http://localhost:4000/  
-本地服务器开启后修改配置文件会实时读取
+本地服务器开启后修改配置文件会实时读取  
 #### 2.3 关联 hexo 和 github
 在 _config.yml 中修改 deploy 字段，指定 hexo 的部署地址和部署分支
 ```
@@ -66,18 +66,18 @@ deploy:
 repository 修改为你自己的github项目地址, branch 为你的部署分支，上述配置告诉工具将生成的网页代码通过git方式上传到对应链接的仓库中  
 此时若想直接本地直接部署网页博客，需先安装deploy-git:  
 ```
-npm install hexo-deployer-git --save
-```  
-然后执行:  
+ npm install hexo-deployer-git --save  
+```
+然后执行:    
 ```
 hexo clean     // 清除之前生成的东西
 hexo generate  // 生成静态页面
 hexo deploy    // 部署到 github
-```  
+```
 deploy时可能需要输入github用户名和密码，等github自动部署成功后就可以在http://yourname.github.io 这个网站看到你的博客了。  
 
 ### 3. 配置Github Action工作流自动化部署网页
-上述本地部署方式是在本地添加博文之后，通过 hexo g 命令在本地编译出网站的静态文件，然后通过 hexo d 将生成的网站的静态文件推送到了gh-pages 分支上, 然后github pages功能会自动触发将你的网站部署到互联网上，，但是如此你的 Hexo 源码(包括博文的md等文件)都还在本地没有云端备份，且每次发表博文都需要手动编译再推送。因此这里引入github action工作流让hexo借助github action工作流自动编译并推送到部署分支。
+上述本地部署方式是在本地添加博文之后，通过 hexo g 命令在本地编译出网站的静态文件，然后通过 hexo d 将生成的网站的静态文件推送到了gh-pages 分支上, 然后github pages功能会自动触发将你的网站部署到互联网上，但是如此你的 Hexo 源码(包括博文的md等文件)都还在本地没有云端备份，且每次发表博文都需要手动编译再推送。因此这里引入github action工作流让hexo借助github action工作流自动编译并推送到部署分支。
 #### 3.1 创建自动化部署token
 首先需要创建一个 token 供 Github Action 使用，在个人设置中新增一个 Personal access tokens。打开自己的 github 主页，点击右上角头像选择 Settings -> Developer Settings -> Personal access tokens -> Tokens(classic) -> Generate new token (classic):  
 ![](./hexo-github-博客搭建记录/github_token.png)  
@@ -139,7 +139,7 @@ jobs:
           git commit -m "Create by workflows"
           git remote add origin https://${{ secrets.HEXO_TOKEN }}@github.com/kongxinhub/kongxinhub.github.io.git
           git push origin HEAD:gh-pages -f
-``` 
+```
 其中node-version的版本号与本地初始化hexo源代码使用的版本保持一致，最后一步部署部分的token名称指定为你上一步创建的token名称。  
 将刚才的更新推送至远程分支，我这里就是 用户名.github.io 仓库的 master 分支，打开github仓库主页，就可以看到 github action 工作流被自动触发，gh-pages分支会多一次提交记录，网页被更新。
 
@@ -244,7 +244,7 @@ index_generator:
   path: ''            # 文章起始页面路径
   per_page: 10        # 每页显示文章数量
   order_by: -date     # 排序（默认按日期降序）
-```  
+```
 在文章的Front Matter中添加参数sticky即可实现首页置顶，数字越大排序越高(升序排序)  
 ### 5. Next主题配置
 首先进入到themes目录下，通过git命令下载Next主题：
@@ -276,7 +276,7 @@ scheme: Gemini
 #### 5.3 文章阅读全文设置
 在文章的md文件中，在你想要简略展示的地方添加如下代码：
 ```
-<!-- more -->
+<!- - more -->
 ```
 这样首页的简略展示只会显示此命令以上的内容。  
 #### 5.4 文章菜单设置
