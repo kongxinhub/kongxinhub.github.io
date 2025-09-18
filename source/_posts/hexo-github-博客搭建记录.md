@@ -2,7 +2,7 @@
 title: hexo + github 博客搭建记录
 typora-root.url: ./hexo + github 博客搭建记录/
 date: 2025-06-15 20:38:15
-tags: github
+tags: c语言
 categories: 笔记
 ---
 ## Hexo + Github pages 个人博客自动化部署记录
