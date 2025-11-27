@@ -122,68 +122,68 @@ typora-root.url: ./markdown学习笔记/
    typora: 在文档开头加[TOC]  
    vscode: 在 VS Code 的命令面板 (即 VS Code Command Palette) 输入 Create Table of Contents 自动生成目录, 且可在扩展设置中细调目录参数
 ### 内连 HTML 代码  
-     ```
-    <div style="text-align:center">
-        <font style="color:red"> HTML 代码 </font>
-    </div>
+```
+<div style="text-align:center">
+    <font style="color:red"> HTML 代码 </font>
+</div>
 
-    <center>文字居中</center>
+<center>文字居中</center>
 
-    <u>下划线</u>
-    ```
+<u>下划线</u>
+```
 ### 内联latex公式 [ 用 "$" 或者 "$$" 包围 ]
-    ```
+```
     $a^n+b^n=c^n$
     $$
     公式块
     $$
-    ```
-    $a^n+b^n=c^n$  
-    在公式块中，大部分数学符号都可以通过键盘直接输入，但是还是有一些符号无法直接通过键盘输入，比如乘号、除号、根号等，需要借助一些特殊的代码来替代:  
-    | 代码 | 符号 | 描述 |
-    | :-: | :-: | :-: |
-    | \not= | $\not=$ | 不等于 |
-    | \approx | $\approx$ | 约等于 |
-    | \times | $\times$ | 乘号 |
-    | \div | $\div$ | 除号 |
-    | \leq | $\leq$ | 小于等于 |
-    | \geq | $\geq$ | 大于等于 |
-    | \pm | $\pm$ | 正负号 |
-    | \sum | $\sum$ | 求和符号（累加）|
-    | \prod | $\prod$ | 累乘 |
-    | \coprod | $\coprod$ | 累除 |
-    | \overline(a+b+c) | $\overline(a+b+c)$ | 平均值 |
-    |\frac| $\frac{分子}{分母}$| 分数 |
-    | \sqrt |$\sqrt[3]{8}$| 开方 |
+```
+$a^n+b^n=c^n$  
+在公式块中，大部分数学符号都可以通过键盘直接输入，但是还是有一些符号无法直接通过键盘输入，比如乘号、除号、根号等，需要借助一些特殊的代码来替代:  
+| 代码 | 符号 | 描述 |
+| :-: | :-: | :-: |
+| \not= | $\not=$ | 不等于 |
+| \approx | $\approx$ | 约等于 |
+| \times | $\times$ | 乘号 |
+| \div | $\div$ | 除号 |
+| \leq | $\leq$ | 小于等于 |
+| \geq | $\geq$ | 大于等于 |
+| \pm | $\pm$ | 正负号 |
+| \sum | $\sum$ | 求和符号（累加）|
+| \prod | $\prod$ | 累乘 |
+| \coprod | $\coprod$ | 累除 |
+| \overline(a+b+c) | $\overline(a+b+c)$ | 平均值 |
+|\frac| $\frac{分子}{分母}$| 分数 |
+| \sqrt |$\sqrt[3]{8}$| 开方 |
 
-    数学中常见特殊字符：
-    | 代码 | 符号 | 代码 | 符号 |
-    | :-: | :-: | :-: | :-: |
-    |\alpha|$\alpha$|\beta|$\beta$|
-    |\gamma|$\gamma$|\delta|$\delta$|
-    |\epsilon|$\epsilon$|\eta|$\eta$|
-    |\theta|$\theta$|\pi|$\pi$|
-    |\omega|$\omega$|\rho|$\rho$|
-    |\sigma|$\sigma$|\mu|$\mu$|  
+数学中常见特殊字符：
+| 代码 | 符号 | 代码 | 符号 |
+| :-: | :-: | :-: | :-: |
+|\alpha|$\alpha$|\beta|$\beta$|
+|\gamma|$\gamma$|\delta|$\delta$|
+|\epsilon|$\epsilon$|\eta|$\eta$|
+|\theta|$\theta$|\pi|$\pi$|
+|\omega|$\omega$|\rho|$\rho$|
+|\sigma|$\sigma$|\mu|$\mu$|  
 
-    上下标：  
-    ```
-    $ x_{下标} $
-    $ x^{上标} $
-    $ x^{上标}_{下标} $
-    ```  
+上下标：  
+```
+$ x_{下标} $
+$ x^{上标} $
+$ x^{上标}_{下标} $
+```  
 ### typora 快捷键  
-    | 按键 | 效果 | 按键 | 效果 |
-    | :-: | :-: | :-: | :-: |
-    | Ctrl + D | 选中当前词 | Ctrl + L | 选中当前句/行 |
-    | Ctrl + E | 选中当前区块 | Ctrl + F | 搜索当前选中 |
-    | Ctrl + B | 加粗当前选中 | Ctrl + H | 替换当前选中 |
-    | Ctrl + I | 倾斜当前选中 | Ctrl + U | 下划当前选中 |
-    | Ctrl + K | 将当前选中生成链接 | Ctrl + J | 滚动屏幕将选中滚至顶部 |
-    | Ctrl + W | 关闭当前窗口 | Ctrl + N | 打开新窗口 |
-    | Ctrl + O | 打开文件 | Ctrl + P | 搜索文件并打开 |
-    | Ctrl + 回车 | 表格下方插入行 | Ctrl + , | 打开偏好设置 |
-    | Ctrl + . | 切换全角/半角标点 | Ctrl + / | 切换正常/源代码视图 |
-    | Ctrl + Shift + - | 缩小视图缩放 | Ctrl + Shift + + | 放大视图缩放 |  
+| 按键 | 效果 | 按键 | 效果 |
+| :-: | :-: | :-: | :-: |
+| Ctrl + D | 选中当前词 | Ctrl + L | 选中当前句/行 |
+| Ctrl + E | 选中当前区块 | Ctrl + F | 搜索当前选中 |
+| Ctrl + B | 加粗当前选中 | Ctrl + H | 替换当前选中 |
+| Ctrl + I | 倾斜当前选中 | Ctrl + U | 下划当前选中 |
+| Ctrl + K | 将当前选中生成链接 | Ctrl + J | 滚动屏幕将选中滚至顶部 |
+| Ctrl + W | 关闭当前窗口 | Ctrl + N | 打开新窗口 |
+| Ctrl + O | 打开文件 | Ctrl + P | 搜索文件并打开 |
+| Ctrl + 回车 | 表格下方插入行 | Ctrl + , | 打开偏好设置 |
+| Ctrl + . | 切换全角/半角标点 | Ctrl + / | 切换正常/源代码视图 |
+| Ctrl + Shift + - | 缩小视图缩放 | Ctrl + Shift + + | 放大视图缩放 |  
 
-    在 Typora 设置中开启 调试模式 后即可在正常视图右击打开 检查元素, 在其中就可以完全将 Markdown 文件当成 HTML 来编辑.  
+在 Typora 设置中开启 调试模式 后即可在正常视图右击打开 检查元素, 在其中就可以完全将 Markdown 文件当成 HTML 来编辑.  
