@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongxinhub.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前置知识线性代数标量就是一个数，只有大小，没有方向；向量是一组标量排列而成，只有一个轴，沿着行或者列方向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习笔记">
+<meta property="og:url" content="https://kongxinhub.github.io/project/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html">
+<meta property="og:site_name" content="孔鑫的个人博客">
+<meta property="og:description" content="前置知识线性代数标量就是一个数，只有大小，没有方向；向量是一组标量排列而成，只有一个轴，沿着行或者列方向。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E7%9A%84%E6%A8%A1%E9%95%BF%E5%92%8C%E8%8C%83%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8D%95%E4%BD%8D%E5%90%91%E9%87%8F.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E5%86%85%E7%A7%AF.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E5%A4%96%E7%A7%AF.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E7%89%B9%E6%80%A7.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9E%81%E9%99%90.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%BC%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%AF%BC%E6%95%B0%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E5%88%86.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%81%8F%E5%AF%BC%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A2%AF%E5%BA%A6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%8B%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%9F%E6%9C%9B%E5%92%8C%E6%96%B9%E5%B7%AE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%81%94%E5%90%88%E6%A6%82%E7%8E%87%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%86%B5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E7%9B%B8%E5%AF%B9%E7%86%B5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/jupyter%E5%BF%AB%E6%8D%B7%E9%94%AE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/GymHelper%E5%8F%AF%E8%A7%86%E5%8C%96.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gym.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%89%E5%90%91%E5%9B%BE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E6%96%AD.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E5%AE%B6%E6%97%8F.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%80%A7%E8%B4%A8.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E7%9F%A9%E9%98%B5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%88%86%E5%B8%83.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9B%9E%E6%8A%A5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%87%E4%BB%BD%E5%9B%BE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E5%9E%8B%E5%88%86%E7%B1%BB%E6%A0%87%E5%87%86.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%88%86%E7%B1%BB%E4%B8%8E%E9%80%89%E6%8B%A9.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%89%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC%E7%9A%84%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E7%AD%96%E7%95%A5%E7%9A%84%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A5%A5%E5%8D%A1%E5%A7%86%E5%89%83%E5%88%80%E5%8E%9F%E5%88%99.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%97%A9%E6%9C%9F%E5%8F%91%E5%B1%95%E6%97%B6%E9%97%B4%E7%BA%BF.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AD%90%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%94%B9%E8%BF%9B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%9C%80%E4%BC%98%E6%96%B9%E7%A8%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E5%AD%90%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%9B%B4%E6%96%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E5%92%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E8%AF%AF%E5%B7%AE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/n%E6%AD%A5%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86vs%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9Bvs%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86vs%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9Bvs%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%922.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B9%BF%E4%B9%89%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q-learning%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q%E8%A1%A8%E6%A0%BC%E6%9B%B4%E6%96%B0%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%82%E7%AD%96%E7%95%A5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q-learning%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SARSA%E7%AE%97%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SARSA%E7%AE%97%E6%B3%95%E6%9B%B4%E6%96%B0%E6%96%B9%E5%BC%8F.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%82%E7%AD%96%E7%95%A5%E4%B8%8E%E5%90%8C%E7%AD%96%E7%95%A5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%8C%E7%AD%96%E7%95%A5%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/n%E6%AD%A5SARSA.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SARSA%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E7%9B%AE%E6%A0%87%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8F%8C%E6%B7%B1%E5%BA%A6Q%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Dueling%20DQN.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%99%AA%E5%A3%B0Q%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BC%98%E5%85%88%E7%BA%A7%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC%E7%9A%84%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%94%B9%E8%BF%9B%E4%B8%80.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%94%B9%E8%BF%9B%E4%BA%8C.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E6%8F%90%E5%87%BA%E5%8A%A8%E6%9C%BA.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%87%8D%E8%A6%81%E6%80%A7%E9%87%87%E6%A0%B7.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E8%87%AA%E9%80%82%E5%BA%94%E6%83%A9%E7%BD%9A.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95CLIP%E8%A3%81%E5%89%AA.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/A2C%E6%94%B9%E8%BF%9B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/A3C%E6%94%B9%E8%BF%9B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%A6%BB%E6%95%A3%E5%8A%A8%E4%BD%9C%E4%B8%8E%E8%BF%9E%E7%BB%AD%E5%8A%A8%E4%BD%9C%E5%8C%BA%E5%88%AB.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%A6%BB%E6%95%A3%E5%8A%A8%E4%BD%9C%E4%B8%8E%E8%BF%9E%E7%BB%AD%E5%8A%A8%E4%BD%9C%E7%AD%96%E7%95%A5%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E4%BB%B7%E5%80%BC%E7%BD%91%E7%BB%9C%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E7%AD%96%E7%95%A5%E7%BD%91%E7%BB%9C%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%80%E5%A4%A7%E7%86%B5%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%80%E5%A4%A7%E7%86%B5%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%BC%98%E5%8A%BF.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E7%AD%96%E7%95%A5%E7%BD%91%E7%BB%9C%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E6%8A%80%E5%B7%A7.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E8%87%AA%E5%8A%A8%E5%8C%96%E8%B0%83%E6%95%B4%E7%86%B5%E6%AD%A3%E5%88%99%E9%A1%B9.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B3%A2%E5%85%B9%E6%9B%BC%E5%88%86%E5%B8%83.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%9A%84%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E4%BC%98%E7%BC%BA%E7%82%B9.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E6%A8%A1%E5%9E%8B%E5%BD%A2%E5%BC%8F.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B2.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%85%8B%E9%9A%86%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%85%8B%E9%9A%86%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E5%BC%8F%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MinmaxQLearning.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%B7%E5%90%88%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%AE%8C%E5%85%A8%E5%90%88%E4%BD%9C%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MADDPG%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MADDPG%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E9%9D%A2%E4%B8%B4%E9%97%AE%E9%A2%98.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E7%AD%96%E7%95%A5%E9%9B%86%E5%90%88.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/alphaStar%E6%99%BA%E8%83%BD%E4%BD%93%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E8%99%9A%E6%8B%9F%E8%87%AA%E6%88%91%E5%8D%9A%E5%BC%88.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E6%80%9D%E8%80%83.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%AD%A5%E9%AA%A4%E4%B8%80.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%AD%A5%E9%AA%A4%E4%BA%8C.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%AD%A5%E9%AA%A4%E4%B8%89.png">
+<meta property="og:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E5%B1%80%E9%99%90.png">
+<meta property="article:published_time" content="2025-09-23T21:25:32.000Z">
+<meta property="article:modified_time" content="2025-11-27T09:30:51.852Z">
+<meta property="article:author" content="Kongxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kongxinhub.github.io/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E7%9A%84%E6%A8%A1%E9%95%BF%E5%92%8C%E8%8C%83%E6%95%B0.png">
+
+
+<link rel="canonical" href="https://kongxinhub.github.io/project/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongxinhub.github.io/project/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html","path":"强化学习笔记.html","title":"强化学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>强化学习笔记 | 孔鑫的个人博客</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">孔鑫的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0"><span class="nav-text">线性代数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E7%A7%AF%E5%88%86"><span class="nav-text">微积分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E7%8E%87"><span class="nav-text">概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conda%E5%B7%A5%E5%85%B7"><span class="nav-text">conda工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gym"><span class="nav-text">Gym</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B"><span class="nav-text">马尔可夫模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E8%A7%82%E6%B5%8B%E8%BF%87%E7%A8%8B"><span class="nav-text">马尔科夫观测过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="nav-text">马尔可夫决策过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B"><span class="nav-text">马尔可夫奖励过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%96%B9%E7%A8%8B"><span class="nav-text">贝尔曼方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%88%86%E7%B1%BB%E5%92%8C%E9%80%89%E6%8B%A9"><span class="nav-text">模型分类和选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95"><span class="nav-text">动态规划方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E6%80%9D%E6%83%B3%E8%A7%A3%E5%86%B3%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E9%97%AE%E9%A2%98"><span class="nav-text">应用动态规划的思想解决强化学习问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E9%87%8D%E7%AD%96%E7%95%A5-%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3"><span class="nav-text">注重策略-策略迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0"><span class="nav-text">策略评估</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%94%B9%E8%BF%9B"><span class="nav-text">策略改进</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%94%B9%E8%BF%9B%E6%9C%80%E5%A4%A7%E5%8C%96%E6%93%8D%E4%BD%9C%E6%B1%82%E8%A7%A3%E6%96%B9%E6%B3%95"><span class="nav-text">策略改进最大化操作求解方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-text">策略迭代适用条件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E9%87%8D%E4%BB%B7%E5%80%BC-%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3"><span class="nav-text">注重价值-价值迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-1"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%9B%B4%E6%96%B0"><span class="nav-text">价值函数估计和更新</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-text">价值迭代适用条件</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E6%97%A0%E6%A8%A1%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="nav-text">经典无模型方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95"><span class="nav-text">蒙特卡洛方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-2"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-text">适用条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95"><span class="nav-text">时序差分方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-3"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86vs%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9Bvs%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-text">时序差分vs蒙特卡洛vs动态规划</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BF%E4%B9%89%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3"><span class="nav-text">广义策略迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-Learning"><span class="nav-text">Q-Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%80%9D%E6%83%B3"><span class="nav-text">更新思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E7%AD%96%E7%95%A5"><span class="nav-text">异策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SARSA%E7%AE%97%E6%B3%95"><span class="nav-text">SARSA算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%80%9D%E6%83%B3-1"><span class="nav-text">更新思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E7%AD%96%E7%95%A5"><span class="nav-text">同策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6-1"><span class="nav-text">适用条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6Q%E7%BD%91%E7%BB%9C%EF%BC%9A-DQN"><span class="nav-text">深度Q网络： DQN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE"><span class="nav-text">经验回放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="nav-text">探索策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%AD%A5%E9%AA%A4"><span class="nav-text">训练步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6-2"><span class="nav-text">适用条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DQN%E7%9A%84%E5%B8%B8%E8%A7%81%E6%94%B9%E8%BF%9B"><span class="nav-text">DQN的常见改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%AD%96%E7%95%A5%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">基于策略的强化学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%94%B9%E8%BF%9B"><span class="nav-text">策略梯度的两种改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-4"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6-3"><span class="nav-text">适用条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6"><span class="nav-text">蒙特卡洛策略梯度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-5"><span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E7%AB%AF%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95PPO"><span class="nav-text">近端策略优化算法PPO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%80%A7%E9%87%87%E6%A0%B7"><span class="nav-text">重要性采样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0-1"><span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-6"><span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E5%91%98%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95"><span class="nav-text">演员评论家算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0-2"><span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A2C%E6%94%B9%E8%BF%9B"><span class="nav-text">A2C改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A3C%E6%94%B9%E8%BF%9B"><span class="nav-text">A3C改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6DDPG"><span class="nav-text">深度确定性策略梯度DDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%8A%A8%E4%BD%9C%E4%B8%8E%E8%BF%9E%E7%BB%AD%E5%8A%A8%E4%BD%9C"><span class="nav-text">离散动作与连续动作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%80%A7%E7%AD%96%E7%95%A5%E4%B8%8E%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%AD%96%E7%95%A5"><span class="nav-text">随机性策略与确定性策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DDPG%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="nav-text">DDPG模型结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0-3"><span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-7"><span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E6%80%A7%E6%BC%94%E5%91%98%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95Soft-Actor-Critic-%E5%9C%A8DDPG%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BC%98%E5%8C%96%E4%BA%86%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="nav-text">软性演员评论家算法Soft Actor-Critic: 在DDPG的基础上进一步优化了目标函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E7%86%B5"><span class="nav-text">最大熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="nav-text">重参数化技巧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E8%B0%83%E6%95%B4%E7%86%B5%E6%AD%A3%E5%88%99%E9%A1%B9"><span class="nav-text">自动化调整熵正则项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-8"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86%EF%BC%9A%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E5%88%86%E5%B8%83%E3%80%81%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96"><span class="nav-text">补充知识：玻尔兹曼分布、重参数化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">基于模型的强化学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dyna-Q%E7%AE%97%E6%B3%95-1990"><span class="nav-text">Dyna-Q算法(1990)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-9"><span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93-Dyna-Q"><span class="nav-text">算法变体 Dyna-Q+</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6-4"><span class="nav-text">适用条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MBPO-%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%EF%BC%8CModel-Based-Policy-Optimization-2021"><span class="nav-text">MBPO(基于模型的策略优化，Model-Based Policy Optimization,2021)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B"><span class="nav-text">环境模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-10"><span class="nav-text">算法步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0"><span class="nav-text">模仿学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E5%85%8B%E9%9A%86"><span class="nav-text">行为克隆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">逆强化学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E5%BC%8F%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0"><span class="nav-text">生成对抗式模仿学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">多智能体强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E7%AB%9E%E4%BA%89%E5%85%B3%E7%B3%BBMinmax-Q-learning%EF%BC%9A"><span class="nav-text">完全竞争关系Minmax Q learning：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E5%85%B3%E7%B3%BBNash-Q-learning"><span class="nav-text">混合关系Nash Q-learning:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%AE%8C%E5%85%A8%E5%90%88%E4%BD%9C%E5%85%B3%E7%B3%BB"><span class="nav-text">多智能体完全合作关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MADDPG-%E5%AF%B9%E6%AF%8F%E4%B8%AA%E6%99%BA%E8%83%BD%E4%BD%93%E5%AE%9E%E7%8E%B0ddpg%E7%AE%97%E6%B3%95"><span class="nav-text">MADDPG:对每个智能体实现ddpg算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AlphaStar%E7%B3%BB%E7%BB%9F"><span class="nav-text">AlphaStar系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BA%BA%E7%B1%BB%E5%8F%8D%E9%A6%88%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0RLHF"><span class="nav-text">基于人类反馈的强化学习RLHF</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kongxin"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kongxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kongxinhub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kongxinhub" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongxinhub.github.io/project/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Kongxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孔鑫的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="强化学习笔记 | 孔鑫的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          强化学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-09-23 21:25:32" itemprop="dateCreated datePublished" datetime="2025-09-23T21:25:32+00:00">2025-09-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-11-27 09:30:51" itemprop="dateModified" datetime="2025-11-27T09:30:51+00:00">2025-11-27</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>19k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1:09</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><h3 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h3><p>标量就是一个数，只有大小，没有方向；向量是一组标量排列而成，只有一个轴，沿着行或者列方向。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E7%9A%84%E6%A8%A1%E9%95%BF%E5%92%8C%E8%8C%83%E6%95%B0.png" alt="向量的模长和范数">  </p>
+<span id="more"></span>
+<p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8D%95%E4%BD%8D%E5%90%91%E9%87%8F.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E5%86%85%E7%A7%AF.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%91%E9%87%8F%E5%A4%96%E7%A7%AF.png"><br>矩阵转置：以对角线为轴，进行镜像翻转 $A^T_{m,n} &#x3D; A_{n,m}$<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E7%89%B9%E6%80%A7.png"><br>张量是多维数组的抽象概括，可以看作是向量和矩阵的推广，向量和矩阵的运算方法对张量同样适用。 </p>
+<h3 id="微积分"><a href="#微积分" class="headerlink" title="微积分"></a>微积分</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9E%81%E9%99%90.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%BC%E6%95%B0.png"><br>变化率为0的点就是函数的极值点<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%AF%BC%E6%95%B0%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E5%88%86.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%81%8F%E5%AF%BC%E6%95%B0.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A2%AF%E5%BA%A6.png"><br>注意梯度是<strong>包含所有偏导数的向量</strong>，$\eta$ 是学习率，J表示损失函数<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.png"></p>
+<h3 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h3><p>频率学派：试 $P_{n}(x)&#x3D;\frac{n_x}{n}$<br>古典学派：平均主义，未知事件发生的概率都是相等的 $P(x)&#x3D;\frac{m}{n}$<br>贝叶斯派：认为概率是不确定性，是个人的主观概念，表明我们对事物的相信程度。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%8B%E4%BB%B6.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%9F%E6%9C%9B%E5%92%8C%E6%96%B9%E5%B7%AE.png"><br>对于离散型的随机变量，期望是所有可能的取值与其概率pi相乘求和(当概率相同时等价于平均值)，对于连续型随机变量，期望是将所有可能的取值与其概率密度函数相乘(积分)<br>价值函数是计算状态或者动作状态对的预期回报，这个预期回报是根据未来可能的奖励和转移概率计算得出的期望值，方差通常用于衡量价值函数的稳定性，因此降低价值函数的方差是一个优化目标。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6.png"><br>假设有一个随机变量X服从正态分布，$\mu$是x的期望值，$\sigma$是x的方差，那么X在区间a到b内的概率就是f(x)在区间a到b内的积分(图一)。<br>对于连续随机变量，概率密度函数是其分布函数的导数，分布函数是描述某个随机变量小于等于某个值的概率的函数(图二)。<br>因此，概率密度函数实际表示就是给定x的对应的概率值。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%81%94%E5%90%88%E6%A6%82%E7%8E%87%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86.png"></p>
+<p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%86%B5.png"><br>熵可以看作是一个随机变量的平均不确定性，对于离散型随机变量，可以通过将每个取值的概率与其对数相乘，并对所有可能性的取值求和来计算，对于连续型随机变量，可以通过将每个取值的概率密度函数与其对数相乘，对所有可能的取值进行积分来计算。<br>强化学习中，熵被用来度量策略的多样性和探索性，策略是智能体在给定状态下选择具体动作的规则和方法。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E7%9B%B8%E5%AF%B9%E7%86%B5.png"><br>交叉熵是用来衡量两个概率分布之间的差异性，一般用来衡量实际的输出和期望的输出之间的差异，特别是在分类任务中，交叉熵损失函数被广泛地用于训练神经网络；在强化学习当中，交叉熵损失函数被广泛应用于策略优化问题。<br>相对熵，也叫kl散度，是衡量两个概率分布之间差异的另一种量度，它衡量的是一个概率分布相对于另外一个概率分布的信息增益或损失，在强化学习中，kl散度常常用于策略改进算法中，比如策略梯度算法中的重要性采样。  </p>
+<h3 id="conda工具"><a href="#conda工具" class="headerlink" title="conda工具"></a>conda工具</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda activate DeepLearning</span><br><span class="line">conda install jupyter notebook</span><br><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+<p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/jupyter%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
+<h3 id="Gym"><a href="#Gym" class="headerlink" title="Gym"></a>Gym</h3><p>开源环境仿真库，包含大量可用环境，目前最常用的强化学习环境库 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install gym=0.26.2</span><br><span class="line">pip install pygame=2.3.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import gym</span><br><span class="line"># 创建CartPole环境，指定渲染模式为rgb_array, 如果是在IDE中可以改为‘human&#x27;</span><br><span class="line">env = gym.make(&#x27;CartPole-v1&#x27;, render_mode=&#x27;rgb_array&#x27;)</span><br><span class="line"># 重置环境</span><br><span class="line">env.reset()</span><br><span class="line"></span><br><span class="line"># 循环N次</span><br><span class="line">for i in range(10):</span><br><span class="line">    env.render() # 渲染环境</span><br><span class="line">    action = env.action_space.sample() # 从动作空间中随机选取一个动作</span><br><span class="line">    env.step(action) # 执行动作</span><br><span class="line"># 关闭环境</span><br><span class="line">env.close()</span><br></pre></td></tr></table></figure>
+<p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/GymHelper%E5%8F%AF%E8%A7%86%E5%8C%96.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gym.png"><br>gym新库：gymnasium  </p>
+<h2 id="马尔可夫模型"><a href="#马尔可夫模型" class="headerlink" title="马尔可夫模型"></a>马尔可夫模型</h2><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%89%E5%90%91%E5%9B%BE.png"><br>竖线后的节点都可以简化至只有父节点。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E6%96%AD.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E5%AE%B6%E6%97%8F.png"></p>
+<h3 id="马尔科夫观测过程"><a href="#马尔科夫观测过程" class="headerlink" title="马尔科夫观测过程"></a>马尔科夫观测过程</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B.png"><br>马尔科夫模型就是一个有向图，每个节点表示一个状态，每条有向边表示状态之间的转移，边上的权重表示对应转移的概率。<br>在马尔可夫模型中，假设状态之间的转移满足马尔可夫性质。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%80%A7%E8%B4%A8.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4.png"><br>R表示实数集合，R^n表示n维实数集合<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E7%9F%A9%E9%98%B5.png"><br>离散情况下用状态转移矩阵，连续情况下用状态转移分布<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%88%86%E5%B8%83.png"><br>可观测性：指该过程或模型状态是否能够被直接观测到或测量到。在机器学习中，通常会将数据看作是某个未知过程或者是模型的观测结果，希望从中推断出模型的内部的状态；强化学习中，可观测性是指智能体能否直接观测到环境的状态，如果可以，智能体就能根据观测的结果做出决策，比如在迷宫中寻找宝藏的游戏，智能体能够直接观测到当前所处的位置以及周围环境信息，这就是完全可观测的强化学习问题；如果环境状态不能被直接观测到，比如机器人的导航，智能体需要借助当前的观测的结果和先前的状态一起推断环境的状态并基于推断的结果做出决策，这就是部分可观测的马尔可夫过程，即隐马尔可夫模型。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B.png"><br>因为状态未知，可以认为它们是隐藏的，又因为有先后顺序，所以可以用有方向的链来表示，节点与节点之间符合马尔可夫性质，这条隐藏的链条即马尔可夫链。</p>
+<h3 id="马尔可夫决策过程"><a href="#马尔可夫决策过程" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B.png"><br>$\pi$是策略，决策是过程，动作是结果；当状态是部分可观测时，对应的随机过程就是部分可观测马尔可夫决策过程(POMDP);比如在游戏等虚拟环境中，状态、动作以及它们之间的有向边的关系都是已知的、可观测的，一般直接用MDP进行建模；POMDP针对智能体无法直接观测到环境的状态，而是通过观测到一些信号来推断当前的状态的情况。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0.png"><br>随机性策略能更好的探索环境，让动作有更多的多样性。策略函数可以是一个简单的函数，也可以是一个复杂的机器学习模型，比如神经网络，$\pi(a|s)$表示在状态s下选择动作a的概率。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B.png"><br>g广义决策过程：st取决于st-1和at-1  </p>
+<h3 id="马尔可夫奖励过程"><a href="#马尔可夫奖励过程" class="headerlink" title="马尔可夫奖励过程"></a>马尔可夫奖励过程</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>奖励是环境给智能体的反馈；<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0.png"><br>模仿学习主要是学习策略函数，再反推奖励函数；逆强化学习是直接学习一个未知的奖励函数。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9B%9E%E6%8A%A5.png"><br>回报是一段时间内的累计奖励值，是一种未来的奖励值的合计，$\gamma$是衰减因子，用来说明更靠近现在时间步的权重更大一些；智能体需要通过选择合适的动作最大化未来的回报。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0.png"><br>当前时刻的价值vt是由未来时刻的奖励决定的，它是动作at发出之后未来价值的一种估计，与rt没有关系，回报是单个episode的奖励的累计值，后者是多个episode的回报期望值，是为了更准确的估计某个策略的长期表现<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0.png"><br>Q&#x3D;quality，Q函数是对于动作的一种质量评估<br>与状态价值函数的区别是奖励r同时由状态s和动作a决定。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94.png"><br>状态空间较小，动作空间相对较大时优选V函数；动作空间较小，状态空间较大时优选Q函数。  </p>
+<h3 id="贝尔曼方程"><a href="#贝尔曼方程" class="headerlink" title="贝尔曼方程"></a>贝尔曼方程</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3.png"><br>p()是状态转移概率函数，s’表示下一时刻的状态($s_{t+1}$)，R(s)表示的是$r_{t+1}$的期望值，即当前状态为s,下一状态为s’所得到的奖励值的期望值，后一项即是$V_{t+1}$的期望值。所以当前状态s下的价值函数值Vs可由下一状态的奖励函数的期望值和下一状态价值函数的期望值计算得到。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3.png"><br>$\pi(a|s)$表示在状态s下选择动作a的概率, p()是状态转移概率函数, R(s)表示的是$r_{t+1}$的期望值，即当前状态为s,采取动作为a,且下一状态为s’所得到的奖励值的期望值，后一项即是t+1时刻的策略价值函数的期望值。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3.png"></p>
+<p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%87%E4%BB%BD%E5%9B%BE.png"><br>空心节点代表状态，实心节点表示状态动作对，在深度强化学习中，备份图的使用较少，因为深度强化学习中，主要使用深度神经网络来表示价值函数和策略函数，并通过梯度下降和梯度上升来更新。 </p>
+<h3 id="模型分类和选择"><a href="#模型分类和选择" class="headerlink" title="模型分类和选择"></a>模型分类和选择</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E5%9E%8B%E5%88%86%E7%B1%BB%E6%A0%87%E5%87%86.png"><br>上图即广义马尔可夫决策过程，每条有向边都表示一个函数<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%88%86%E7%B1%BB%E4%B8%8E%E9%80%89%E6%8B%A9.png"></p>
+<p>根据有没有状态转移函数来分类可以分为无模型算法和有模型算法；<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95.png"><br>智能体直接学习价值函数和策略函数，无模型算法往往需要大量的采样来估计状态动作以及奖励价值，进而优化策略，是一种数据驱动型的方法；对于无模型强化学习算法，一个典型的训练过程可能需要几十万甚至几百万帧的数据才能获得比较稳定的策略；但无模型的方法假设更少，泛化性更强。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%89%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95.png"><br>基于策略和价值函数优先考虑哪一个，分为三类：<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC%E7%9A%84%E7%AE%97%E6%B3%95.png"><br>基于价值类的方法中，并不是没有策略，只是不会显式的直接求它，而是直接求价值函数；动作空间简单，比如围棋象棋<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E7%AD%96%E7%95%A5%E7%9A%84%E7%AE%97%E6%B3%95.png"><br>对于大量真实世界中的任务场景，比如机器人控制、自动化假设等等，动作空间往往较大，而且是连续的，再用基于价值的方法就不行了，很难从价值函数直接推导得到动作，因此往往需要直接优化策略(策略梯度法，近端策略优化)。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95.png"><br>价值函数和策略函数同等重要，actor强调策略函数，critic关注价值函数的相互作用。<br>模型选择方法：奥卡姆剃刀原则<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A5%A5%E5%8D%A1%E5%A7%86%E5%89%83%E5%88%80%E5%8E%9F%E5%88%99.png"><br>马尔可夫随机过程代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-04/4.8%20%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-04/4.8%20%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a>   </p>
+<h2 id="动态规划方法"><a href="#动态规划方法" class="headerlink" title="动态规划方法"></a>动态规划方法</h2><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%97%A9%E6%9C%9F%E5%8F%91%E5%B1%95%E6%97%B6%E9%97%B4%E7%BA%BF.png"></p>
+<p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3.png"><br>最优性原理：一个过程的最优策略具有这样的性质，无论其初始状态及初始决策如何，对于前面决策所造成的某一状态而言其后阶段的决策序列必须构成最优策略<br>动态规划基本步骤：划分子问题；定义状态；构建状态转移方程；递归求解；存储中间结果。  </p>
+<h3 id="应用动态规划的思想解决强化学习问题"><a href="#应用动态规划的思想解决强化学习问题" class="headerlink" title="应用动态规划的思想解决强化学习问题"></a>应用动态规划的思想解决强化学习问题</h3><h4 id="注重策略-策略迭代"><a href="#注重策略-策略迭代" class="headerlink" title="注重策略-策略迭代"></a>注重策略-策略迭代</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AD%90%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3.png"><br>对于强化学习这样一个马尔可夫决策过程而言，在假定环境模型已知的情况下，即在pgm模型图当中，状态转移函数p是已知的，子问题分为两个，一个是求策略价值函数$V_\pi(s)$或动作价值函数Q(s, a),一个是求策略$\pi$,在策略迭代算法中，他们分别叫策略评估和策略改进；策略迭代就是反复进行策略评估和策略改进两个步骤来逐步实现策略$\pi$的优化；  </p>
+<h5 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h5><p>首先是<strong>初始化</strong>，为整个马尔可夫决策过程定义初始化的策略，可以是随机策略或者确定性策略，它指定了在每个状态下应该采取的动作；<br>接着进行<strong>策略评估</strong>，通过求解贝尔曼方程来计算价值函数V或者动作价值函数Q；<br>然后进行<strong>策略改进</strong>，根据前一步计算得到的价值函数来更新策略，改善新能，具体来说，每个状态选择可以最大化价值函数的动作作为新的策略；<br>最后，新的策略将再次用于价值评估，不断<strong>迭代，重复评估和改进两个步骤</strong>，直到价值函数收敛位置。<br>算法最终为找到一个最优的策略，使得智能体可以获得最大的累计奖励。  </p>
+<h5 id="策略评估"><a href="#策略评估" class="headerlink" title="策略评估"></a>策略评估</h5><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0.png"><br>策略评估就是计算当前策略下的价值函数，可以是策略价值函数V,也可以是动作价值函数Q, $\pi(a|s)$就是在给定状态s的情况下采取动作a的概率，R(s,a)是即时奖励，p是状态转移概率，$V_{\pi}(s’)$s是下一时刻的策略价值函数，S是状态空间所有状态的集合，a是动作空间所有动作的集合，<strong>因为策略已经给定，所以前面的求和符号还有a的影响均可去掉。</strong><br>举例：<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0%E7%A4%BA%E4%BE%8B.png"><br>假设智能体在一个4*4的网格中，每个网格代表一个状态，转移概率方面，通常假设智能体执行一个动作之后，状态转移到下一个状态的概率是确定的，例如如果在当前状态选择向上移动，那么转移到上方状态的概率为1，转移到其他状态的概率为0，此外在网格边界处，如果智能体执行向边界外的动作，它会保持在原地。折扣因子在0到1之间，重视长期奖励则选择接近1的因子；初始策略是在任何状态下都采取随机的动作，即上下左右都是0.25的概率，奖励值通常由人为设定，比如到达终点状态就+10，为了鼓励智能体尽快到达目标状态，可以对每个步骤施加一个负的奖励值，比如-1，如果网格中存在障碍物，可以对障碍物的碰撞施加较低的奖励值，比如-5。 </p>
+<h5 id="策略改进"><a href="#策略改进" class="headerlink" title="策略改进"></a>策略改进</h5><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%94%B9%E8%BF%9B.png"><br>策略改进的本质就是取最大化操作(贪心操作), 如果更关注整体的状态价值，而不是每个动作的价值，此时可以使用状态价值函数的策略改进，如果需要关注每个状态下的具体动作价值，可以选择第二种动作价值函数的策略改进。这两种方法并不是互斥的，某些情况下这两种方法可以同时存在，结合求解。    </p>
+<h5 id="策略改进最大化操作求解方法"><a href="#策略改进最大化操作求解方法" class="headerlink" title="策略改进最大化操作求解方法"></a>策略改进最大化操作求解方法</h5><p>Q表格：<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q%E8%A1%A8%E6%A0%BC.png"><br>每个单元格表示在给定状态下采取特定动作的预期累计奖励；对于某个状态，选取每行中中的最大值，它对应的动作就是现在应该采取的最优动作，算法通过不算更新Q表格中的值来改善策略。如果任务的状态空间和动作空间比较大，那么Q表格的大小会迅速的增加，可能会导致存储和计算上的挑战，因此对于复杂问题一般会用函数逼近，比如神经网络来代替Q表格，近似Q值函数。<br>贝尔曼最优方程：<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%9C%80%E4%BC%98%E6%96%B9%E7%A8%8B.png"><br>贝尔曼最优方程即把最大化操作和贝尔曼方程结合，最佳策略下的状态价值等于这个状态下采取最好动作得到的动作价值。  </p>
+<h5 id="策略迭代适用条件"><a href="#策略迭代适用条件" class="headerlink" title="策略迭代适用条件"></a>策略迭代适用条件</h5><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"></p>
+<h4 id="注重价值-价值迭代"><a href="#注重价值-价值迭代" class="headerlink" title="注重价值-价值迭代"></a>注重价值-价值迭代</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E5%AD%90%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3.png"><br>根据动态规划的分解思想，可以把强化学习分解成两个子问题：价值估计和价值更新;策略迭代强调的是策略$\pi$, 即使求价值函数也是为了更新策略函数，而价值迭代以价值为中心，虽然每步迭代中也会有更新动作，但是是直接根据价值选择动作，没有去显式更新一个策略函数，即策略迭代中是显式的更新策略，价值迭代中是隐式的更新策略，也可以说在策略迭代中策略的更新是全局性的，而价值迭代中策略的更新是局部的。</p>
+<h5 id="算法步骤-1"><a href="#算法步骤-1" class="headerlink" title="算法步骤"></a>算法步骤</h5><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>首先初始化状态价值函数为任意初始值，然后在每次迭代中，对每个状态s通过贝尔曼期望方程计算价值函数，然后通过最大化操作更新价值函数，重复迭代直至收敛。</p>
+<h5 id="价值函数估计和更新"><a href="#价值函数估计和更新" class="headerlink" title="价值函数估计和更新"></a>价值函数估计和更新</h5><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1.png"><br>在价值迭代中，价值函数的计算策略评估的过程是相同的，都是使用贝尔曼期望方程来计算每个状态的价值函数<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%9B%B4%E6%96%B0.png"><br>价值函数的更新就是直接找到Q函数的最大值，然后替换掉状态价值函数Vs,价值更新和策略更新主要的区别就是最大化操作符的不同，左边max返回的最大值本身，右边argmax返回的是使函数达到最大值的变量的取值(即动作)。  </p>
+<h6 id="价值迭代适用条件"><a href="#价值迭代适用条件" class="headerlink" title="价值迭代适用条件"></a>价值迭代适用条件</h6><p>价值迭代计算效率高，但收敛速度较慢，尤其状态空间较大时；策略迭代更耗时，但能更快地收敛到最优策略。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"><br>策略迭代是在每次迭代中先根据最优动作(或者动作概率)更新价值，在当前价值收敛后再根据最大价值选择每个状态的最优动作(或者更新动作概率)，价值迭代是每次迭代针对每个状态遍历所有可能的动作计算价值并选取最大的价值直接更新价值，直到所有状态的价值改变量小于阈值(收敛)，在收敛后再根据最大价值提取出每个状态的最优动作。  </p>
+<h2 id="经典无模型方法"><a href="#经典无模型方法" class="headerlink" title="经典无模型方法"></a>经典无模型方法</h2><h3 id="蒙特卡洛方法"><a href="#蒙特卡洛方法" class="headerlink" title="蒙特卡洛方法"></a>蒙特卡洛方法</h3><p>蒙特卡洛方法最初用于计算核物理实验中复杂粒子运动和相互作用问题，用来模拟和预测试验的结果，它的名字源自于摩纳哥的蒙特卡洛赌场，当时由于缺乏计算机技术，科学家们使用随机抽样和模拟方法来解决复杂的计算问题，一个科学家将这种随机抽样的方法比喻为在赌场进行赌博的过程，因此命名为蒙特卡洛方法。<br>蒙特卡洛强化学习方法是一种基于样本估计的无环境模型，主要思想是通过与环境的交互，收集完整的轨迹数据，然后利用他们来估计状态价值函数或者动作价值函数；其本质是大数定理：独立同分布随机变量序列中，随样本数增加，均值会趋向于真实期望。换言之就是什么都不知道的时候，先瞎试瞎猜，即随机抽样，然后根据统计分析来估计，当数据量足够多的时候，就能得到问题的近似解。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>假设环境未知，因此没有状态间的转移分布，智能体动作和环境的交互也是隐含的，是通过收集一个个episode(即从初始状态经过一系列交互到终止状态的过程序列)来隐含建模，不需要显式的定义或者规定具体交互方式，因此策略$\pi$也是隐含的，不需要直接估计或者测量这个函数，在蒙特卡洛方法中，<strong>Q值被看作一系列的值，而不是一个函数，不再需要迭代计算，而是可以通过统计多个轨迹的奖励进行累计和平均后直接得到</strong>，是一种基于经验采样的方法；需要注意的是，这个过程中奖励函数还是人为设定的，根据状态动作组合可以计算奖励的累计，即回报，进而可以计算每个时刻的价值。</p>
+<h3 id="算法步骤-2"><a href="#算法步骤-2" class="headerlink" title="算法步骤"></a>算法步骤</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>首先与环境交互生成并且收集轨迹的数据，包括状态动作和奖励，然后根据回合数据计算每个时间步的回报，这个回报可以是累计奖励的总和或者折扣；在更新价值函数时，其中$\alpha$是学习率，其迭代公式不是直接计算所有回报的平均值，而是一个一个回报的进行增量计算，因此也被称为增量蒙特卡洛方法，最后根据更新的价值函数选择更优动作。重复执行步骤2到4，收集更多的episode的数据并更新，直到收敛或者达到预定的停止条件。</p>
+<h3 id="适用条件"><a href="#适用条件" class="headerlink" title="适用条件"></a>适用条件</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E5%92%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AF%B9%E6%AF%94.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"><br>动态规划适用于问题规模较小且状态空间可以枚举时，蒙特卡洛方法通过采样episode的数据来估计价值函数，不依赖于贝尔曼方程，但是基于每个episode所得的完整轨迹经验进行更新，对于控制问题，可能需要更多的样本和计算资源，因此更适用于预测问题和交互式学习。<br>蒙特卡洛方法是回合制的环境，每个交互周期可以看作是一个完整的回合，必须有明确的终点，在每个回合结束的时候可以获得完整的回合数据，包括状态、动作和奖励的序列。  </p>
+<h3 id="时序差分方法"><a href="#时序差分方法" class="headerlink" title="时序差分方法"></a>时序差分方法</h3><p>基于价值的强化学习算法，侧重学习和优化价值函数<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png"><br>利用时间上不同的两个状态一前一后它们之间的差异来更新价值函数。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>和蒙特卡洛方法相比，最大的区别是没有用Q函数，而是用了价值函数V, 它不使用多条轨迹，而是在单一轨迹的相邻两个状态之间利用增量更新进行价值函数的迭代，某种程度上就是价值的反向传播。这个过程中依然使用了贝尔曼方程，只是没有环境模型，也没有显式的估计策略，即没有P和$\pi$, 这点和蒙特卡洛方法是一致的，和动态规划方法是不同的。</p>
+<h4 id="算法步骤-3"><a href="#算法步骤-3" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>$\epsilon$-greedy: 贪心算法，以$\epsilon$的概率选择一个随机动作，以$1-\epsilon$的概率选择当前估计的最优动作，从而达到一定程度上的探索和利用的平衡。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E8%AF%AF%E5%B7%AE.png"><br>$\gamma$是折扣因子，值越大表示越关注长期的回报，$\alpha$是学习率<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/n%E6%AD%A5%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95.png"><br>n步时序差分方法是将时序差分方法和蒙特卡洛方法结合起来使用，在更新价值函数时，不仅利用当前时刻的奖励和下一时刻的价值估计，还结合了未来多个时间步的奖励和价值估计。具体来说，在每个时间步上，先进行n步的探索，收集n步的奖励序列，并记录这段序列的起始和终止状态，然后根据未来n步的奖励和终止状态的价值估计更新起始状态的价值估计。  </p>
+<h4 id="时序差分vs蒙特卡洛vs动态规划"><a href="#时序差分vs蒙特卡洛vs动态规划" class="headerlink" title="时序差分vs蒙特卡洛vs动态规划"></a>时序差分vs蒙特卡洛vs动态规划</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86vs%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9Bvs%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.png"><br>动态规划使用的是贝尔曼期望方程，蒙特卡洛和时序差分用的是贝尔曼方程，针对单个轨迹。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86vs%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9Bvs%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%922.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"><br>因为需要在每个时间步都更新状态、动作价值函数Q,因此不适用于连续的状态动作空间；时序差分方法假设强化学习问题满足马尔可夫性质，即当前的状态包含了过去的所有信息并且未来的状态的转移仅依赖于当前状态和当前动作，而蒙特卡洛方法没有此假设条件。<br>蒙特卡洛方法和时序差分方法代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/tree/master/Chapter-06">https://gitee.com/Gengzhige/Reinforcement-Learning/tree/master/Chapter-06</a>  </p>
+<h3 id="广义策略迭代"><a href="#广义策略迭代" class="headerlink" title="广义策略迭代"></a>广义策略迭代</h3><p>本质上是无模型强化学习的一种框架，保留了策略迭代的思想，而非某种具体的算法。通过它的引入，我们可以将蒙特卡洛方法和时序差分方法统一到一个完整的框架下。主要思想：之前的策略迭代模型，第一步是策略评估，根据原始公式需要知道状态转移，而这在无模型环境下是无法求的，广义策略迭代就去掉了该公式，允许使用其他方法比如蒙特卡洛方法或者时序差分方法直接估计动作价值函数Q(s, a),在策略改进阶段可以仍然使用贪心算法，也可以使用其他优化算法，即广义策略迭代允许使用更高级的算法替换原有的策略评估方法，整个过程仍然保留了策略迭代两步计算的核心思想，但内核可以替换。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B9%BF%E4%B9%89%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3.png"><br>N(S, A)表示在状态S下选择动作A的次数，用于控制探索与利用的平衡，选择次数选多更新权重越低。<br>动态规划等有模型框架策略评估使用的是贝尔曼期望方程来求Q函数，需要状态转移函数和动作转移函数，无模型框架可以使用不需要显式状态转移函数的方法进行策略评估来求得Q函数，从而进行策略改进。  </p>
+<h3 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><p>通过构建和更新一个Q表格来学习最优策略，把所有的Q值归纳起来，构建了状态s、动作a和Q值之间的映射关系，用于策略的推导。不涉及任何复杂的概率推导，直接算数求表格。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q-learning%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3.png"><br>对比时序差分方法，Q-Learning做出的改变就是把更新状态价值函数的过程变成了更新Q函数,整个模型的架构依然没有状态转移，因此属于无模型的强化学习方法。<br>从动作到下一时刻的状态以及从状态到动作的策略$\pi$都是未知的，没有直接估计策略的分布。</p>
+<h4 id="更新思想"><a href="#更新思想" class="headerlink" title="更新思想"></a>更新思想</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q%E8%A1%A8%E6%A0%BC%E6%9B%B4%E6%96%B0%E6%80%9D%E6%83%B3.png"><br>通过迭代逼近的思想来实现，初始时对所有Q值进行初始化假设,可以使用固定的初始值或者根据问题的具体情况定一个合理的初始值，然后每步根据状态St+1选取不同动作at+1得到的Q值，选最大的进行更新，随着学习的进行,Q值会逐渐更新和调整，逐渐收敛并接近其真实的值。在学习完成后，智能体可以根据表格中的值选择具有最高Q值的动作作为最优策略。</p>
+<h4 id="异策略"><a href="#异策略" class="headerlink" title="异策略"></a>异策略</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%82%E7%AD%96%E7%95%A5.png"><br>几乎所有强化学习算法都可以抽象成两个阶段：收集数据和学习，前者就像是训练场，根据一个策略收集数据(动作选择上具有探索性)，然后提供给学习阶段更新策略；数据收集阶段的行为策略和学习阶段的目标策略函数不同，因此叫做异策略。行为策略和目标策略都是最大化Q函数，只不过前者是一个分情况的函数，使用$\epsilon$引入了更多的随机性，保证数据收集阶段能做更多的探索。如果学习阶段还这样的话就不容易收敛，因此不如直接最大化Q表格，学好的Q表格也可以再给到数据收集阶段用于新的迭代。这种数据收集与学习适度分离，允许两种策略的方法能够充分利用专家经验实验experience reply的效果，即在数据收集阶段，可以使用其他智能体或者是人类专家的策略，然后再学习阶段，再让智能体自己学习。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Q-learning%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"> </p>
+<h3 id="SARSA算法"><a href="#SARSA算法" class="headerlink" title="SARSA算法"></a>SARSA算法</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SARSA%E7%AE%97%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png"><br>SARSA算法依旧使用Q表格来保存和更新Q值，进而学习策略，主要区别在于更新方式不同。</p>
+<h4 id="更新思想-1"><a href="#更新思想-1" class="headerlink" title="更新思想"></a>更新思想</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SARSA%E7%AE%97%E6%B3%95%E6%9B%B4%E6%96%B0%E6%96%B9%E5%BC%8F.png"><br>SARSA和Q-learning方法类似，唯一的区别是没有采用max操作，和时序差分方法的区别是更新的是Q函数，而不是V函数。</p>
+<h4 id="同策略"><a href="#同策略" class="headerlink" title="同策略"></a>同策略</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%82%E7%AD%96%E7%95%A5%E4%B8%8E%E5%90%8C%E7%AD%96%E7%95%A5.png"><br>同策略智能体用于选择动作的策略和用于更新价值函数的策略是相同的。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%8C%E7%AD%96%E7%95%A5%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/n%E6%AD%A5SARSA.png"><br>在n步而不是一步之后再更新Q和策略$\pi$, 相比于单步SARSA，n步SARSA可以通过一次更新同时考虑未来n步的奖励，因此收敛速度更快，较小的n值更注重即时奖励，更适合在动态环境下搜索，较大的n值更加注重长期回报。</p>
+<h4 id="适用条件-1"><a href="#适用条件-1" class="headerlink" title="适用条件"></a>适用条件</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SARSA%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"><br>必须是马尔可夫决策过程问题，其中状态转移满足马尔可夫性质，即下一个状态的转移只依赖于当前状态和当前采取的动作。<br>Qlearning和SARAS代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-06/6.7%20Q-Learning%20&%20SARSA%20%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-06/6.7%20Q-Learning%20&amp;%20SARSA%20%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a><br>主要就是q值更新方法不同  </p>
+<h3 id="深度Q网络：-DQN"><a href="#深度Q网络：-DQN" class="headerlink" title="深度Q网络： DQN"></a>深度Q网络： DQN</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png"><br>当状态空间或者是动作空间比较大，或者状态空间是连续的情况下，DQN的核心思想就是将强化学习中的Q_learning算法与深度神经网络相结合，用神经网络实现对高维状态空间价值函数的近似。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>DQN在模型结构上和Q-learning算法几乎是一样的，是一个无模型的结构，没有明确的状态转移，根据Q函数通过如贪心策略直接选择动作。<br>和传统Q-learning最大的区别就是价值函数的求解，改用神经网络作为动作价值函数的函数逼近器，将状态和动作的组合作为输入，输出相应的Q值作为估计，$\omega$是深度网络模型的参数。</p>
+<h4 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png"><br>DQN损失函数的计算$r_{t+1}$是基于单条轨迹上的即时奖励r，而不是多个轨迹的期望R。</p>
+<h4 id="经验回放"><a href="#经验回放" class="headerlink" title="经验回放"></a>经验回放</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE.png"><br>每次的随机抽样可以提高样本的独立性，有效地保证训练的稳定性和效率。经验回放(使用用过了的数据)可以高效利用历史经验数据，提高数据的使用率，避免每次更新中只使用最新样本，极大地缓解了强化学习中小样本喂不饱神经网络的问题。<br>其次连续样本往往时间上高度相关，可能导致训练过程中的偏差和不稳定，通过经验回放，DQN能够有效减少样本之间的相关性，使样本满足所谓的独立假设；第三有助于在探索和平衡之间寻找最佳的平衡。</p>
+<h4 id="探索策略"><a href="#探索策略" class="headerlink" title="探索策略"></a>探索策略</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5.png"></p>
+<h4 id="训练步骤"><a href="#训练步骤" class="headerlink" title="训练步骤"></a>训练步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E7%9B%AE%E6%A0%87%E7%BD%91%E7%BB%9C.png"><br>如果Qt和Qt+1都同频率在变动，那在更新网络参数的同时，目标也在不断地改变，这非常容易造成神经网络训练的不稳定性。为了解决这个问题，DQN提出了目标网络的思想。<br>具体来说，就是用两套神经网络分别估计两个不同的Q函数，目标网络的参数自己不会更新，只是隔几步才会把训练网络的参数同步一下。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>开始初始化两个网络和经验池，然后进入while循环，分为采样阶段和学习阶段，采样阶段先调整并设置一个较大的$\epsilon$,然后在训练过程中逐步减小，接着智能体采取行动，观测奖励以及下一时刻状态并存入经验池；<br>当经验池有足够数据后，进入学习阶段，先从经验池选择一小批数据元祖，然后循环遍历所有的数据元祖，计算损失函数并利用随机梯度下降法来更新训练网络Q，每隔C步同步权重给目标网络函数。<br>每步迭代都是先随机采样形成训练样本然后再训练网络。</p>
+<h4 id="适用条件-2"><a href="#适用条件-2" class="headerlink" title="适用条件"></a>适用条件</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DQN%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"><br>DQN代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-07/7.2%20DQN%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-07/7.2%20DQN%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a>  </p>
+<h4 id="DQN的常见改进"><a href="#DQN的常见改进" class="headerlink" title="DQN的常见改进"></a>DQN的常见改进</h4><p><strong>双深度Q网络DDQN</strong>：经典DQN有个显著的问题，估计的Q值往往会偏大，因为它是以下一时刻的状态的Q值的最大值来估算的，<br>但是下一个状态的Q值也是一个估算值，也依赖它的下一个状态的Q值最大值，一直这样误差传递，导致了Q值往往偏大。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8F%8C%E6%B7%B1%E5%BA%A6Q%E7%BD%91%E7%BB%9C.png"><br>核心思想：用两个参数不同的Q网络，独立更新，先根据$S_{t+1}$和左边的Q网络来选择最大的动作，使用argmax操作，<br>然后把找到的最大动作和$S_{t+1}$传给右边的$Q_{t+1}$网络用于更新，<br>即目标网络的更新方式变了，不是根据自己时刻的动作$a_{t+1}$,而是根据Q网络选的最大动作来更新。<br>动作a（$a_{t+1}$）的选择由目标网络换成由Q网络来选择，目标网络根据Q网络选定的动作计算$Q_{t+1}$的值<br>实现：同时用模型网络和目标网络计算$S_{t+1}$的Q值，根据模型网络计算的Q值选出最大化的动作a,然后取目标网络在$S_{t+1}$下计算的状态a的Q值<br><strong>Dueling DQN</strong>: 在传统DQN中，每个动作价值Q(s, a)都需要计算，然而在某些情况下，评估状态价值并不需要每个动作的细节，因此会浪费计算存储开销。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Dueling%20DQN.png"><br>可以把状态值Vs当做不同动作的公共部分，视为基准值，而优势函数A可以视为一种增量值，即在给定状态下动作a相对于其他可选动作在价值上的差异；<br>好处在于处理大型动作空间的问题时，只需要对每个动作的优势函数进行计算，而基础部分的状态值Vs是共享的。<br><strong>Noisy DQN:</strong><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%99%AA%E5%A3%B0Q%E7%BD%91%E7%BB%9C.png"><br>与传统$\epsilon$-greedy算法相比，增加了探索能力，其次避免了过早陷入固定行为模式，传统的贪心策略可能导致智能体陷入某种固定的行为，过度依赖已知的左右动作。<br><strong>优先级经验回放：</strong><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BC%98%E5%85%88%E7%BA%A7%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE.png"><br>原始的经验回放是均匀采样，没有考虑到不同样本之间的重要性差异；优先级经验回放赋予学习效率高的以更大的采样权重。<br>目标函数中TD error越大，说明该状态价值函数Q与TD的目标差距越大，agent的更新量越大，因此该处的学习效率就越高，因此可以用TD error来做权重。<br>改进方法代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-07/7.4%20DQN%E5%B8%B8%E8%A7%81%E6%94%B9%E8%BF%9B%E5%92%8C%E6%89%A9%E5%B1%95%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-07/7.4%20DQN%E5%B8%B8%E8%A7%81%E6%94%B9%E8%BF%9B%E5%92%8C%E6%89%A9%E5%B1%95%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a></p>
+<h3 id="基于策略的强化学习算法"><a href="#基于策略的强化学习算法" class="headerlink" title="基于策略的强化学习算法"></a>基于策略的强化学习算法</h3><p>早期的算法主要集中在价值方法上，首先求解状态价值函数V或者动作价值函数Q, 然后使用贪心算法argmax来选择动作，这类方法在状态空间和动作空间较小而且离散的情况下效果还不错；<br>然而当状态空间变得较大而且动作空间是连续的时候，传统的基于价值的方法就不那么适用了。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC%E7%9A%84%E7%AE%97%E6%B3%95.png"><br>基于策略的算法对策略函数直接优化，而不是间接地优化价值函数，它直接建模和优化策略，因此可以更好地适应连续动作空间和高维状态空间，基于价值函数的算法借助价值函数指定策略的时候需要比较各种动作的价值大小，如果动作空间维度较高或者是连续的时候从中比较得出有最大价值的动作比较困难。<br>在策略梯度中，参数化的策略$\pi$不再是一个概率集合，而是一个概率密度函数，$\theta$是它的参数，策略梯度的核心思想就是通过设计一个基于策略的目标函数对其使用梯度上升优化算法来最大化奖励。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>用神经网络作为策略函数的函数逼近器，使用策略梯度进行更新，通过优化它的参数来优化策略$\pi$<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png"><br>目标是在N个episode中找到最佳策略，即所有的回合的总回报的平均值最大，这个平均值是加权平均，因为每条轨迹发生的概率不同。$\theta$是模型参数。  </p>
+<h4 id="策略梯度的两种改进"><a href="#策略梯度的两种改进" class="headerlink" title="策略梯度的两种改进"></a>策略梯度的两种改进</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%94%B9%E8%BF%9B%E4%B8%80.png"><br>减小方差并加速策略优化的收敛速度。<br>策略梯度的计算通常使用采样轨迹的方法，通过多条轨迹，即多次与环境的交互来收集数据，每条轨迹都会算出一个梯度来更新策略函数的参数，然而单个轨迹的梯度可能存在高方差的问题，容易导致训练过程的不稳定；<br>为了解决这个问题，引入一个基线，即对回合回报减去一个b,具体可以减去总奖励均值再除以方差来实现，这样可以将奖励调整为均值为0，方差为1的分布，从而使得梯度更新的尺度更加合适。<br>某种程度上可以将优势函数视为价值函数在策略梯度算法中的一种变体，属于价值评估的范畴。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%94%B9%E8%BF%9B%E4%BA%8C.png"><br>原始目标函数中，同一个episode里所有时间步的状态动作对使用同样的奖励来进行加权，这是不合理的；<br>修改方法：在计算某个时刻的奖励的时候，不使用整个episode的奖励，而是计算从当前这个时刻执行以后的累计奖励，因为在这之前发生的事情和这个动作是没有关系的；<br>并且在累计奖励时可以再乘以一个系数，把未来的奖励做个折扣，因为一般情况下，时间越久当前动作的影响力就越小，因此系数随时间指数级减小。</p>
+<h4 id="算法步骤-4"><a href="#算法步骤-4" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>VPG算法是最基本的策略梯度算法；<br>根据误差平方和调整基线值，使其更加接近实际回报的估计值？<br>这里是在多个episode上一起通过计算平均值来更新策略梯度的？<br>注意更新完模型后要重新采样数据再更新模型，即采样的数据只会使用一次</p>
+<h4 id="适用条件-3"><a href="#适用条件-3" class="headerlink" title="适用条件"></a>适用条件</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"></p>
+<h3 id="蒙特卡洛策略梯度"><a href="#蒙特卡洛策略梯度" class="headerlink" title="蒙特卡洛策略梯度"></a>蒙特卡洛策略梯度</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png"><br>核心思想是通过采样轨迹来估计策略的梯度，并且使用梯度上升法来更新策略参数，最大化累计的奖励。<br>和经典的策略梯度相比，主要的不同是更新方式，vanilla方法是采用多条轨迹计算平均值，然后一次性更新策略梯度。而蒙特卡洛策略梯度则是逐条轨迹对策略参数进行更新。<br>严格意义上蒙特卡洛策略梯度也是一类方法，最典型的一种是reinforce算法。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>模型结构和经典策略梯度算法相似，策略函数用神经网络函数来逼近，唯一的区别是价值函数的表达形式，这里选用了回报Gt而不是轨迹的总回报，这和改进型vanilla算法相比相差不大，两种方式的主要区别在神经网络的更新方式上。<br>vanilla算法是多条轨迹一起更新策略，比如5个episode只更新一次，而蒙特卡洛策略梯度是一条轨迹更新一次。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png"><br>但看目标函数，蒙特卡洛策略梯度目标函数和改进二的策略梯度目标函数是相似的，目标函数J是给定策略后的累计奖励期望，更新是以单条轨迹为单位进行，并没有求N条轨迹的总和。<br>最后一步把它表示成了前后时刻回报迭代的形式，便于计算。</p>
+<h4 id="算法步骤-5"><a href="#算法步骤-5" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>首先初始化策略参数，然后开始轨迹循环，根据当前策略生成一条轨迹，接着进入第二个循环，遍历轨迹内部的各个时间步，先计算回报G, 接着根据梯度上升更新参数。<br>虽然最后一步中策略参数被更新了，但是这个新的策略并没有立即用于生成新的episode。而是等遍历完整个episode之后再更新策略。<br>代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-08/8.3%20%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-08/8.3%20%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a><br>缺点：一个episode只能更新一次参数   </p>
+<h3 id="近端策略优化算法PPO"><a href="#近端策略优化算法PPO" class="headerlink" title="近端策略优化算法PPO"></a>近端策略优化算法PPO</h3><p>openai公司在2017年提出来的，chatgpt训练使用<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E6%8F%90%E5%87%BA%E5%8A%A8%E6%9C%BA.png"><br>将数据采样和训练学习分离，两个阶段所使用的policy不一定相同。  </p>
+<h4 id="重要性采样"><a href="#重要性采样" class="headerlink" title="重要性采样"></a>重要性采样</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%87%8D%E8%A6%81%E6%80%A7%E9%87%87%E6%A0%B7.png"><br>csdn参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_57565004/article/details/152051599?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-152051599-blog-146460916.235%5Ev43%5Epc_blog_bottom_relevance_base9&spm=1001.2101.3001.4242.1&utm_relevant_index=3">https://blog.csdn.net/qq_57565004/article/details/152051599?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-152051599-blog-146460916.235^v43^pc_blog_bottom_relevance_base9&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=3</a><br>(很妙) ppo讲解： <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iz421h7gb?buvid=XU11FF212E704E69F1794654F65F97F8F3FF4&from_spmid=search.search-result.0.0&is_story_h5=false&mid=hvOBq1yDUHiSQtqD747iRQ==&plat_id=116&share_from=ugc&share_medium=android&share_plat=android&share_session_id=600a2d9b-28d4-4ec8-9576-19c763c9e523&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1761834190&unique_k=972W2mP&up_id=18235884">https://www.bilibili.com/video/BV1iz421h7gb?buvid=XU11FF212E704E69F1794654F65F97F8F3FF4&amp;from_spmid=search.search-result.0.0&amp;is_story_h5=false&amp;mid=hvOBq1yDUHiSQtqD747iRQ%3D%3D&amp;plat_id=116&amp;share_from=ugc&amp;share_medium=android&amp;share_plat=android&amp;share_session_id=600a2d9b-28d4-4ec8-9576-19c763c9e523&amp;share_source=WEIXIN&amp;share_tag=s_i&amp;spmid=united.player-video-detail.0.0&amp;timestamp=1761834190&amp;unique_k=972W2mP&amp;up_id=18235884</a><br>待分解…  </p>
+<h4 id="目标函数-1"><a href="#目标函数-1" class="headerlink" title="目标函数"></a>目标函数</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png"><br>重要性采样实现的是两个策略分布的转换，同时用两个样本的比值来调整误差，KL散度用来约束两个分布的差异性<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E8%87%AA%E9%80%82%E5%BA%94%E6%83%A9%E7%BD%9A.png"><br>目标函数的1&#x2F;N求样本平均可以简化掉，直接求和即可，原因一：假定所有样本的概率相同；原因二：求梯度的情况下除以样本数N作用不大<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95CLIP%E8%A3%81%E5%89%AA.png"><br>核心逻辑是A&gt;0时目标策略分布不能过于大于采样的策略分布，A&lt;0时目标策略分布不能过于小于采用的策略分布 </p>
+<h4 id="算法步骤-6"><a href="#算法步骤-6" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/PPO%E7%AE%97%E6%B3%95%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>PPO代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-08/8.5%20PPO%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-08/8.5%20PPO%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a><br>仅包含一个策略网络和一个价值网络，重点是策略网络的随时函数。</p>
+<h3 id="演员评论家算法"><a href="#演员评论家算法" class="headerlink" title="演员评论家算法"></a>演员评论家算法</h3><p>当状态空间和动作空间比较小或者说是离散的时候，价值类算法比较有优势，简单高效；当状态和动作空间比较大或者连续的时候，直接更新策略梯度的方法比较有效。<br>演员评论家算法使用了策略梯度和时序差分，是二者的有机结合。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png"></p>
+<h4 id="目标函数-2"><a href="#目标函数-2" class="headerlink" title="目标函数"></a>目标函数</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%BC%94%E5%91%98-%E8%AF%84%E8%AE%BA%E5%AE%B6%E7%AE%97%E6%B3%95%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>策略被称为演员，价值函数是评论家。<br>在 REINFORCE 算法中，每次需要根据一个策略采集一条完整的轨迹，并计算这条轨迹上的回报。这种采样方式的方差比较大，学习效率也比较低。我们可以借鉴时序差分学习的思想，使用动态规划方法来提高采样的效率，即从状态 s 开始的总回报可以通过当前动作的即时奖励 r(s,a,s’) 和下一个状态 s′ 的值函数来近似估计，即用Q(s, a)来估计。</p>
+<h4 id="A2C改进"><a href="#A2C改进" class="headerlink" title="A2C改进"></a>A2C改进</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/A2C%E6%94%B9%E8%BF%9B.png"><br>把这个期望值估计函数Q换成r+v的好处就是不需要估计 Q 了，只需要估计 V 就够了。但这样就引入了一个 r ，它是一个随机变量。但是这个随机变量，相较于累积奖励 G 可能还好，因为它是某一个步骤会得到的奖励，而 G 是所有未来会得到的奖励的总和。G 的方差比较大，r 虽然也有一些方差，但它的方差会比 G 要小。所以把原来方差比较大的 G 换成方差比较小的 r 也是合理的。  </p>
+<h4 id="A3C改进"><a href="#A3C改进" class="headerlink" title="A3C改进"></a>A3C改进</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/A3C%E6%94%B9%E8%BF%9B.png"><br>A3C算法是一个分布式的体系结构，通过异步更新和参数共享的方式实现高效训练。<br>A3C一开始会有一个 global network。它们有包含 policy 的部分和 value 的部分，假设它的参数就是$\theta1$，​对于每一个 worker 都用一张 CPU 训练（举例子说明），第一个 worker 就把 global network 的参数 copy 过来，每一个 worker 工作前都会global network 的参数 copy 过来。<br>然后这个worker就要去跟environment进行交互，每一个 actor 去跟environment做互动后，就会计算出 gradient并且更新global network的参数。这里要注意的是，所有的 actor 都是平行跑的、之间没有交叉。所以每个worker都是在global network“要”了一个参数以后，做完就把参数传回去。<br>所以当第一个 worker 做完想要把参数传回去的时候，本来它要的参数是θ1​，等它要把 gradient 传回去的时候。可能别人已经把原来的参数覆盖掉，变成θ2了。但是没有关系，它一样会把这个 gradient 覆盖过去。<br>演员评论家算法原理：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42301220/article/details/123311478">https://blog.csdn.net/weixin_42301220/article/details/123311478</a>  </p>
+<h3 id="深度确定性策略梯度DDPG"><a href="#深度确定性策略梯度DDPG" class="headerlink" title="深度确定性策略梯度DDPG"></a>深度确定性策略梯度DDPG</h3><p>演员评论家算法在离散动作空间中应用较多，而且原始设计都是在线的策略优化算法，在线策略意味着智能体在与环境交互的同时进行网络参数的更新。<br>DDPG一是着重解决了连续动作空间的问题，二是可以进行离线的异策略优化。  </p>
+<h4 id="离散动作与连续动作"><a href="#离散动作与连续动作" class="headerlink" title="离散动作与连续动作"></a>离散动作与连续动作</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%A6%BB%E6%95%A3%E5%8A%A8%E4%BD%9C%E4%B8%8E%E8%BF%9E%E7%BB%AD%E5%8A%A8%E4%BD%9C%E5%8C%BA%E5%88%AB.png"><br>离散动作的控制方式通常用整数或者离散的编码来表示；连续动作可以用实数或者向量来表示，智能体可以直接输出连续动作的值。<br>对于连续的动作控制空间，Q-learning与DQN等算法是无法处理的。我们无法用这些算法穷举出所有action的Q值，更无法取其中最大的Q值。那如何输出连续的动作呢，我们可以借用万能的神经网络来处理。在离散动作的场景下，比如输出上下左右这四个动作。有几个动作，神经网络就输出几个概率值，我们用πθ(at∣st)来表示这个随机性的策略。在连续的动作场景下，比如要输出机器人手臂弯曲的角度，这样的一个动作，网络就输出一个具体的浮点数，用μθ(st)来代表这个确定性的策略。  </p>
+<h4 id="随机性策略与确定性策略"><a href="#随机性策略与确定性策略" class="headerlink" title="随机性策略与确定性策略"></a>随机性策略与确定性策略</h4><p>对随机性策略来讲，输入某一个状态s，采取某一个动作的可能性是一个概率值，类似抽奖，根据概率随机抽取某一个动作。而对于确定性策略来讲，它没有概率的影响。当神经网络的参数固定下来了之后，输入同样的状态，必然输出同样的动作，这就是确定性的策略。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%A6%BB%E6%95%A3%E5%8A%A8%E4%BD%9C%E4%B8%8E%E8%BF%9E%E7%BB%AD%E5%8A%A8%E4%BD%9C%E7%AD%96%E7%95%A5%E7%BD%91%E7%BB%9C.png"><br>在策略网络的实现上，输入都是状态s，但是网络的最后一层分别选用了softmax函数和tanh函数，对于离散动作空间，输出是个分布，通过采样得到最后的动作选项；对于连续的动作空间，输出是一个确定的标量值，直接就是动作的描述。 </p>
+<h4 id="DDPG模型结构"><a href="#DDPG模型结构" class="headerlink" title="DDPG模型结构"></a>DDPG模型结构</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>DQN中是隐式策略，并没有直接求策略的分布，而是通过取价值函数最大值来获取动作a; DDPG直接用神经网络逼近策略函数分布。原先的随机策略变成了确定性策略，给定一个状态s,就会对应一个唯一的动作a。<br>DDPG主要有两点：1、使用了确定的策略；2、使用了双网络，DDPG有Critic当前网络，Critic目标网络，Actor当前网络，Actor目标网络。<br>对连续空间使用确定性策略的好处：原理上并不是连续空间就不能用随机策略，主要是基于计算效率的考量，对于随机的情况，策略梯度计算时需要对状态和动作同时做积分，非常复杂，而确定性策略只需要对状态进行积分。<br>在高维动作空间时，确定性策略比随机策略更容易训练。但是确定性策略的缺点是动作选择完全对应一个状态，可能会导致探索的力度不够，因此DDPG像深度Q网络一样，设计了一个异策略算法，在收集样本阶段，给动作策略添加更多的随机性噪声，以此增强探索的力度，而在训练阶段，让目标策略专心学习，一定程度上实现了采样和学习的分离。</p>
+<h4 id="目标函数-3"><a href="#目标函数-3" class="headerlink" title="目标函数"></a>目标函数</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E4%BB%B7%E5%80%BC%E7%BD%91%E7%BB%9C%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png"><br>价值网络损失函数(Q函数)的目标是最小化当前网络和目标网络的差异<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E7%AD%96%E7%95%A5%E7%BD%91%E7%BB%9C%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0.png"><br>策略函数的目标是最大化预期回报，因此选择Q函数负值作为目标函数。当前策略网络用于动作选择和迭代；目标策略网络只用于生成目标Q值优化价值网络，减少Q值波动，并不参与动作选择，定期从当前网络同步参数值。</p>
+<h4 id="算法步骤-7"><a href="#算法步骤-7" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DDPG%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>csdn讲解：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37663944/article/details/103619159">https://blog.csdn.net/m0_37663944/article/details/103619159</a><br>(推荐)博客园讲解：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xingzheai/p/16076860.html">https://www.cnblogs.com/xingzheai/p/16076860.html</a>  </p>
+<h3 id="软性演员评论家算法Soft-Actor-Critic-在DDPG的基础上进一步优化了目标函数"><a href="#软性演员评论家算法Soft-Actor-Critic-在DDPG的基础上进一步优化了目标函数" class="headerlink" title="软性演员评论家算法Soft Actor-Critic: 在DDPG的基础上进一步优化了目标函数"></a>软性演员评论家算法Soft Actor-Critic: 在DDPG的基础上进一步优化了目标函数</h3><p>动机: 贪心策略和确定性最优策略过度利用已知最优策略，而忽视了对未知状态和动作的探索 </p>
+<h4 id="最大熵"><a href="#最大熵" class="headerlink" title="最大熵"></a>最大熵</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%80%E5%A4%A7%E7%86%B5%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.png"><br>熵是对一个变量无序程度的度量，在目标函数加入熵正则项；最大熵强化学习的核心思想就是在最大化累计奖励的同时让策略更加随机，即输出的action的概率尽可能分散；<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%9C%80%E5%A4%A7%E7%86%B5%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%BC%98%E5%8A%BF.png"><br>不丢失任何一个有价值的动作，任何有价值的轨迹</p>
+<h4 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png"><br>在热力学中，熵的最大化对应着系统叨叨热平衡的状态，而玻尔兹曼分布则描述了在这种平衡状态下能量分布的特性；或者说，玻尔兹曼分布是使得系统的熵最大化的概率分布，因此SAC方法借鉴了热力学理论，进一步提出了策略$\pi$应该符合玻尔兹曼分布。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3.png"><br>上述式子把策略$\pi$用一个KL散度让它尽量逼近逗号右边的分布，其中Q函数的指数化操作是为了使其转化为一个概率分布，在保留各个动作相对差异的同时，Q值被转化为非负数，类似于热力学当中玻尔兹曼分布对能量进行指数化的操作，价值函数Q相当于能量energy，超参数$\alpha$的作用类似温度系数，用来调整峰的形状，分母Z是一个归一化因子，确保策略函数生成的动作概率之和为1。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E7%AD%96%E7%95%A5%E7%BD%91%E7%BB%9C%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png"><br>Q网络一般是几层MLP，最后输出一个单值来表示Q就可以了，policy网络需要输出一个分布，一搬输出一个高斯分布，包含均值和方差；对于Q网络的更新，也是构造了目标网络target soft Q网络，同时为了缓解Q值过高估计的问题，使用了两个Q网络，每次挑一个Q值较小的使用(j)，D表示经验池，即过去收集的数据，因为SAC是异策略的离线算法；对于policy网络参数的更新，上述式子可以看作是最小化与玻尔兹曼分布的KL散度。</p>
+<h4 id="重参数化技巧"><a href="#重参数化技巧" class="headerlink" title="重参数化技巧"></a>重参数化技巧</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E6%8A%80%E5%B7%A7.png"><br>对于连续动作空间的环境，SAC算法策略网络输出的是高斯分布的均值和标准差，但是存在一个问题，高斯分布的采样动作是不可导的，因此需要使用重参数化技巧。在许多概率模型和变分推断中，随机性通常通过采样操作来引入，然而这种直接对目标分布进行随机采样得到随机性结果的操作是不可导的。以高斯分布为例，传统的采样操作是直接从均值和方差参数中采样出一个具体的值，而重参数化技巧将高斯分布的采样表示为一个确定性变换$z&#x3D; \mu + \sigma * \epsilon$，其中z是采样的样本，$\mu$和$\sigma$是模型输出的均值和方差，$\epsilon$是服从均值为0，方差为1的正态分布，如此在梯度计算时就能对两个输出项进行求导，$\epsilon$属于额外参数项。</p>
+<h4 id="自动化调整熵正则项"><a href="#自动化调整熵正则项" class="headerlink" title="自动化调整熵正则项"></a>自动化调整熵正则项</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E8%87%AA%E5%8A%A8%E5%8C%96%E8%B0%83%E6%95%B4%E7%86%B5%E6%AD%A3%E5%88%99%E9%A1%B9.png"><br>在训练过程中，不同状态下需要不同大小的熵，比如当最优动作不确定时，熵需要大一些，当某个最优动作比较确定时熵取值可以小一点。为了能够自动调整熵正则项，SAC将强化学习的目标改为一个带约束的优化问题：最大化期望回报的同时约束熵的均值大于H0，化简后可以得到关于正则项$\alpha$的损失函数$L(\alpha)$,当策略的熵低于目标值H0时，训练目标L会使得$\alpha$增大，增加策略中熵的重要性。具体实现时H0可取动作空间的对数，再取负值转换为最小化问题，</p>
+<h4 id="算法步骤-8"><a href="#算法步骤-8" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SAC%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"></p>
+<h4 id="补充知识：玻尔兹曼分布、重参数化"><a href="#补充知识：玻尔兹曼分布、重参数化" class="headerlink" title="补充知识：玻尔兹曼分布、重参数化"></a>补充知识：玻尔兹曼分布、重参数化</h4><p>SAC概述：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41739364/article/details/135359200">https://blog.csdn.net/qq_41739364/article/details/135359200</a><br>SAC与Soft Q-learning: <a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_52032317/article/details/134230579">https://blog.csdn.net/sinat_52032317/article/details/134230579</a>   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class PolicyNetContinuous(torch.nn.Module):</span><br><span class="line">    def __init__(self, state_dim, hidden_dim, action_dim, action_bound):</span><br><span class="line">        super(PolicyNetContinuous, self).__init__()</span><br><span class="line">        self.fc1 = torch.nn.Linear(state_dim, hidden_dim)</span><br><span class="line">        self.mu = torch.nn.Linear(hidden_dim, action_dim)</span><br><span class="line">        self.std = torch.nn.Linear(hidden_dim, action_dim)</span><br><span class="line">        self.action_bound = action_bound</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        mu = self.mu(x)</span><br><span class="line">        std = F.softplus(self.std(x))</span><br><span class="line">        dist = torch.distributions.Normal(mu, std)</span><br><span class="line">        normal_sample = dist.rsample()  # rsample()是重参数化采样</span><br><span class="line">        log_prob = dist.log_prob(normal_sample) # 对dim个action每个单独计算其采样值的对数概率密度</span><br><span class="line">        action = torch.tanh(normal_sample)</span><br><span class="line">        # 计算tanh_normal分布的对数概率密度</span><br><span class="line">        log_prob = log_prob - torch.log(1 - torch.tanh(action).pow(2) + 1e-7) # 雅可比修正,用于处理‌tanh变换对动作概率密度的影响</span><br><span class="line">        action = action * self.action_bound</span><br><span class="line">        return action, log_prob</span><br></pre></td></tr></table></figure>
+<p>SAC中输出的mu和std是一个动作对应一个，即在SAC中，每个动作通常是独立采样的，每个动作对应一个正态分布；对于连续动作空间，每个动作的概率密度是独立的，因此dim个动作的联合概率密度是各自概率密度的乘积；由于每个动作的概率密度函数在(-∞,∞)上的积分已经为1，dim个独立动作的联合概率密度在(-∞,∞)^dim上的积分也是1<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B3%A2%E5%85%B9%E6%9B%BC%E5%88%86%E5%B8%83.png"><br>玻尔兹曼分布由来：<br>Soft Q-learning: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/149091823">https://zhuanlan.zhihu.com/p/149091823</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/664534945">https://zhuanlan.zhihu.com/p/664534945</a><br>本质就是在损失函数中加入了熵正则项，玻尔兹曼分布是加入熵正则项的理论支持<br>重参数化：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45190012/article/details/144721894">https://blog.csdn.net/qq_45190012/article/details/144721894</a><br>gumbel softmax：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/520413399">https://zhuanlan.zhihu.com/p/520413399</a><br>次梯度：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97465608">https://zhuanlan.zhihu.com/p/97465608</a><br>(推)重参数方法探讨：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/561328468">https://zhuanlan.zhihu.com/p/561328468</a><br>y_soft 是经过Gumbel噪声处理和温度参数控制的连续近似分布,由于y_soft是连续且可微的，在反向传播时，梯度可以通过它顺畅地流向模型参数，从而实现端到端的训练。y_hard 是通过对 y_soft 应用 argmax 操作得到的one-hot向量，表示真正的离散采样结果，是一个离散的、不可导的结果。即使不对它使用detach()，由于argmax本身的不可导性，梯度也无法通过它反向传播。实际上，y_hard在计算图中更像是一个”终点站”——它接收来自y_soft的信息，但本身不产生梯度路径。因此，无论是否显式地对y_hard使用detach()，都不会影响梯度流，因为argmax已经天然阻断了梯度。通过y_soft.detach()，我们创建了一个与计算图分离的y_soft副本。这样在前向计算差值y_hard - y_soft.detach()时，这个差值部分不会产生梯度，确保了梯度只通过右侧的y_soft流动。</p>
+<h2 id="基于模型的强化学习算法"><a href="#基于模型的强化学习算法" class="headerlink" title="基于模型的强化学习算法"></a>基于模型的强化学习算法</h2><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%9A%84%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95.png"><br>在基于模型的强化学习算法中，状态转移通常是从真实环境中收集经验数据来得到，通过分析和建模可以估计状态转移的概率分布；具体有几种常见的方法：第一种是直接建模，在某些问题当中可以直接从环境中观察到状态转移的概率分布，比如deepMind的gym环境，状态转移概率是已知的，第二种是经验采样，智能体与真实环境进行交互，收集一系列的经验数据，通过对经验数据进行统计分析可以估计状态转移的概率分布；第三种….<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E4%BC%98%E7%BC%BA%E7%82%B9.png"></p>
+<h3 id="Dyna-Q算法-1990"><a href="#Dyna-Q算法-1990" class="headerlink" title="Dyna-Q算法(1990)"></a>Dyna-Q算法(1990)</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E6%A8%A1%E5%9E%8B%E5%BD%A2%E5%BC%8F.png"></p>
+<h4 id="算法步骤-9"><a href="#算法步骤-9" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>整个过程可以看作两个循环步骤，外循环用的是智能体和真实环境的交互轨迹，同时更新环境模型，首先根据当前的状态S和策略应用贪心算法选择动作A,然后执行该动作，观测奖励r和下一时刻状态，并更新动作价值函数；内循环是利用环境模型生成的模拟数据(随机选择之前观测到的状态动作对)，利用q-planning的方法不断优化动作价值函数(实质上是利用旧经验数据进行多步的Q学习).</p>
+<h4 id="算法变体-Dyna-Q"><a href="#算法变体-Dyna-Q" class="headerlink" title="算法变体 Dyna-Q+"></a>算法变体 Dyna-Q+</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93.png"><br>Dyna-Q有一个强假设：环境是固定不变的，因此当环境是变化的，新模型还没有学习到，那模型就是错的。<br>Dyna-Q+在探索未知状态时给予额外的奖励，具体来说使用一个探索的计数器跟踪每个状态动作对被访问的次数；比如原来某个状态转移过程的reward是R，这个转移过程自上次访问到现在经过了t,就把该转移过程的reward设置为$R+\sqrt t$。</p>
+<h4 id="适用条件-4"><a href="#适用条件-4" class="headerlink" title="适用条件"></a>适用条件</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DynaQ%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6.png"></p>
+<h3 id="MBPO-基于模型的策略优化，Model-Based-Policy-Optimization-2021"><a href="#MBPO-基于模型的策略优化，Model-Based-Policy-Optimization-2021" class="headerlink" title="MBPO(基于模型的策略优化，Model-Based Policy Optimization,2021)"></a>MBPO(基于模型的策略优化，Model-Based Policy Optimization,2021)</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84.png"><br>模型框架和DynaQ算法类似，只不过价值函数更新采用SAC算法替换q-learning，环境模型采用神经网络来学习逼近状态转移分布替代确定性字典，此外，状态的起始点以真实环境样本作为分支推演的起点，向前预测推演k步；整体使用了三类神经网络：环境模型状态转移网络、soft价值函数网络和soft策略网络。</p>
+<h4 id="环境模型"><a href="#环境模型" class="headerlink" title="环境模型"></a>环境模型</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E7%8E%AF%E5%A2%83%E6%A8%A1%E5%9E%8B2.png"><br>先假定单个环境模型为高斯分布，输入为动作状态对，输出为高斯均值和方差；考虑到实际模型可能不是高斯分布，采用集成学习思想，简单来说就是构建了多个神经网络，输入都是动作状态对，输出都是下一个状态的高斯分布的均值向量和协方差矩阵，只是参数采用不同的随机初始化，而且每次训练时都是从真实数据中随机采样不同的数据进行训练，这种方法叫带有轨迹采样的概率集成。</p>
+<h4 id="算法步骤-10"><a href="#算法步骤-10" class="headerlink" title="算法步骤"></a>算法步骤</h4><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MBPO%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>首先初始化策略环境模型参数、真实的环境数据集以及模型数据集，然后进入第一个迭代循环，首先在环境数据集上通过最大似然方法训练环境模型参数，然后进入时间步的循环，根据当前的策略执行动作并将与环境交互的轨迹添加到环境数据集中，然后对M个模型分别进行预测推演，其中先从环境数据集中均匀随机采样一个状态ST作为起始点，然后使用当前的策略进行k步模型推演，再把生成的轨迹数据添加到模型数据集中，然后基于模型数据适用SAC算法更新策略网络参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> # 定义损失函数，接收预测的均值和log方差以及真实的标签</span><br><span class="line">def loss(self, mean, logvar, labels):</span><br><span class="line">    # 计算方差的倒数，用来作为损失函数的一个权重，增加方差较小的样本的重要性</span><br><span class="line">    inv_var = torch.exp(-logvar)</span><br><span class="line">    </span><br><span class="line">    # 计算预测均值与真值的loss</span><br><span class="line">    mean_loss = torch.mean(torch.mean(torch.pow(mean - labels, 2) * inv_var, dim=-1), dim=-1)</span><br><span class="line">    # 方差loss</span><br><span class="line">    var_loss = torch.mean(torch.mean(logvar, dim=-1), dim=-1)</span><br><span class="line">    # 求和后返回</span><br><span class="line">    total_loss = torch.sum(mean_loss) + torch.sum(var_loss)</span><br><span class="line">    return total_loss, mean_loss</span><br></pre></td></tr></table></figure>
+<p>上述代码是环境模型的损失函数，模型的输出是每个状态和reward(默认为1)的均值和方差，均值直接和label真值作差求损失，方差一方面作为均值损失的额外权重，增加较小方差(结果更确定更置信)的样本的损失反馈权重，另一方面通过最小化方差驱使模型根据确定性。<br>选择结果时是从多个模型中随机选择一个模型结果。<br>(内容较多)代码实现：<a target="_blank" rel="noopener" href="https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-10/10.5%20MBPO%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb">https://gitee.com/Gengzhige/Reinforcement-Learning/blob/master/Chapter-10/10.5%20MBPO%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.ipynb</a>  </p>
+<h2 id="模仿学习"><a href="#模仿学习" class="headerlink" title="模仿学习"></a>模仿学习</h2><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3.png"><br>深度学习尤其是监督学习训练数据需要标签，虽然强化学习不需要标签数据，但它高度依赖于奖励函数的设定，微小的奖励函数改动有时会训练出截然不同的策略。在许多实际场景中，奖励函数没有被明确的定义或者奖励信号非常稀疏，这种情况下，随机设计奖励函数不能确保训练出的策略一定符合实际的需求，模仿学习则避开了这个难题，它假设有专家示范与环境进行交互，无需奖励信号就可以直接从专家交互的状态和动作数据中模仿得到最优策略。  </p>
+<h3 id="行为克隆"><a href="#行为克隆" class="headerlink" title="行为克隆"></a>行为克隆</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%85%8B%E9%9A%86%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png"><br>行为克隆是一种直接使用监督学习方法的技术，将专家数据中的状态和对应的动作对作为训练样本，状态视为输入，动作视为标签。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%85%8B%E9%9A%86%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90.png"></p>
+<h3 id="逆强化学习"><a href="#逆强化学习" class="headerlink" title="逆强化学习"></a>逆强化学习</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png"><br>先学习环境的奖励函数，暂时不考虑状态转移模型，可以用一个神经网络来逼近实现，输入是专家示范的轨迹，包括状态和动作的序列，输出是一个近似的奖励函数，损失函数最常见的是最大熵损失函数。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png"><br>D表示收集到的轨迹数据集，t表示其中的某条轨迹，r表示参数化的奖励函数，Z是r的指数函数求和，M是示范数据的数量。最大熵逆强化学习是一个迭代的过程。通过交替优化策略和奖励函数，逐步逼近专家行为。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%80%86%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90.png"></p>
+<h3 id="生成对抗式模仿学习"><a href="#生成对抗式模仿学习" class="headerlink" title="生成对抗式模仿学习"></a>生成对抗式模仿学习</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E5%BC%8F%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0.png"><br>判别器的目标是将专家数据的输出靠近0，策略网络的数据靠近1；其优点是从专家示范中学习，无需奖励信号，支持多元化的生成策略，缺点是训练不稳定，十分依赖专家示范数据。  </p>
+<h2 id="多智能体强化学习"><a href="#多智能体强化学习" class="headerlink" title="多智能体强化学习"></a>多智能体强化学习</h2><p>当多个智能体与环境进行交互时，整个系统就变成了多智能体的系统，其中每个智能体仍然遵循强化学习的目标，即最大化累计奖励，所有智能体根据当前的环境状态同时选择并执行各自的动作。这些动作有影响了环境状态的转移和更新。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1.png"><br>$\pi^{-i}$表示在给定其他智能体策略的情况下智能体i的策略。在多智能体强化学习中，纳什均衡就是多个智能体达到的一种平衡点，对于其中的任何一个智能体来说，没办法通过采取其他的策略来获取更到的回报；纳什均衡不一定是全局最优，但他在概率上是最容易产生的一种结果，是在学习时比较容易收敛到的一种状态。<br>智能体兼的关系分为竞争关系、半竞争半合作混合关系以及完全合作关系，不同的关系类型直接决定了多智能体问题的建模和求解方法。  </p>
+<h3 id="完全竞争关系Minmax-Q-learning："><a href="#完全竞争关系Minmax-Q-learning：" class="headerlink" title="完全竞争关系Minmax Q learning："></a>完全竞争关系Minmax Q learning：</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MinmaxQLearning.png"><br>最优价值函数的目标是对于一个智能体i,考虑在其他的智能体i-采取动作a-令自己回报最差的情况下能够获得的最大的期望回报。其中V和Q省略了智能体i的下标，这是因为在零和博弈中，设定Q1&#x3D;-Q2，因此目标函数是对称的，这个价值函数表明当前智能体在考虑对手策略的情况下使用贪心选择使得智能体容易收敛到纳什均衡策略。  </p>
+<h3 id="混合关系Nash-Q-learning"><a href="#混合关系Nash-Q-learning" class="headerlink" title="混合关系Nash Q-learning:"></a>混合关系Nash Q-learning:</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%B7%E5%90%88%E5%85%B3%E7%B3%BB.png"><br>一个博弈中各个参与者的总和不为0，参与者的收益有正有负，每个智能体都是贪心Q-learning方法，一个智能体i的Nash Q值定义为其他智能体的策略$\pi$乘以当前智能体的Q值，同时Q值使用nash Q值迭代更新。因此对于单个智能体i，除了要知道全局状态s和其他智能体动作A以外，还需要知道其他所有智能体在下一状态对应的nash均衡策略$\pi$,因此nash q learning方法对智能体能够获取的智能体的信息包括动作奖励等都具有较强的假设。在复杂的真实环境中，一般不满足这样严格的条件，应用范围有限。</p>
+<h3 id="多智能体完全合作关系"><a href="#多智能体完全合作关系" class="headerlink" title="多智能体完全合作关系"></a>多智能体完全合作关系</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%AE%8C%E5%85%A8%E5%90%88%E4%BD%9C%E5%85%B3%E7%B3%BB.png"></p>
+<h3 id="MADDPG-对每个智能体实现ddpg算法"><a href="#MADDPG-对每个智能体实现ddpg算法" class="headerlink" title="MADDPG:对每个智能体实现ddpg算法"></a>MADDPG:对每个智能体实现ddpg算法</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MADDPG%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png"><br>中心化训练，去中心化执行<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/MADDPG%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4.png"><br>三层循环，最外层是episode，第二层是时间步的循环，第三层是agent的循环，开始先初始化一个随机过程N用于动作探索，获取所有智能体的初始观测X,然后在每个时间步中，对于每个智能体i用当前的策略选择一个动作a,执行动作并获得奖励a和新的观测r，然后把$(X, a, r, X’)$存储到经验回放池D中，然后针对每个智能体i从D中随机的采样一些数据，然后中心化的训练critic网络(Q网络)，训练自身的actor网络(策略网络)，最后对于每个智能体i更新目标actor网络和目标critic网络。<br>Simple Spread： 每个圆球都能坐到椅子上，并且不互相发生碰撞，agent默认是3个,动作维度是5，分上下左右和无动作，动作值上下限为0-1，观测状态是18位的向量，包含了agent当前的速度、位置、与椅子之间的相对位置、与其他agent的相对位置等，state是3个agent的特征向量之后共54个。</p>
+<h3 id="AlphaStar系统"><a href="#AlphaStar系统" class="headerlink" title="AlphaStar系统"></a>AlphaStar系统</h3><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E9%9D%A2%E4%B8%B4%E9%97%AE%E9%A2%98.png"><br>首先模型接收来自游戏的观察数据，包括游戏的地图、单位的位置属性等等，通过卷积神经网络CNN进行处理和特征提取，用来捕捉地图和单位间的空间关系和重要的特征，即状态state，接着智能体经过一系列的网络模块和注意力的机制，生成动作策略。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF.png"><br>第一步是使用人类的数据做有监督的预训练，学习的目标就是给定一个状态，预测下一步的动作，然后与真实的动作A之间求一个KL散度做损失函数，第二步就是强化学习，以人类监督学习的数据来初始化状态，具体的强化学习算法用了A3C算法，使用了经验回放池，最后在决策层的设计上融合了多个方法，其中V-Trace技术deepMind团队在其强化学习框架IMPALA使用的一种方法，它已经被证明在大规模并行环境下能够有效地进行深度的强化学习，具体是用来纠正off policy训练当中不同策略之间的差异，$TD(\lambda)$是时序差分，具体考虑了多个步骤的信息来更新价值的函数，还有一个UPGO(unsupervised predictive game outcome)，它是一个在模仿学习中使用的方法，目的是尽量选择能够达到收益较高轨迹的动作。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E7%AD%96%E7%95%A5%E9%9B%86%E5%90%88.png"><br>为了创建一个多样化的训练环境，增强智能体的泛化能力，AlphaStar同时训练了三个策略的集合，每个种族都有三个不同的策略集合，main agents为主要智能体，通过与其他智能体(包括自己的过去版本以及main explorers)对战来学习改进自己的策略，main exploers的对手是当前的main agents, 它们的任务是找到并利用这些main agents的策略漏洞，通过这种方式促使main engines去纠正这些漏洞；legal explorers的任务是找到并利用整个训练环境包括main agents和main explorers里面的策略漏洞，通过这种方式进一步的保证训练环境的多样性。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/alphaStar%E6%99%BA%E8%83%BD%E4%BD%93%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84.png"><br>智能体网络架构是由通用的神经网络组件构成的，玩家和对手单位的观测结果通过自注意力机制或者transformer进行处理，ResNet和反卷积ResNet用来处理图片像素的信息，主要用在了minimap小地图编码和target point action的选择上；为了整合空间和非空间的信息，进一步引入了scatter connections，为了处理部分可观测性，观测结果的时间序列由深度长短期记忆系统deep LSTM来处理；为了管理结构化组合动作空间，又使用了自回归策略和递归指针网络。整体网络参数达到了1.39亿个，实际推理过程中只需要5500万个。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E8%99%9A%E6%8B%9F%E8%87%AA%E6%88%91%E5%8D%9A%E5%BC%88.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AlphaStar%E6%80%9D%E8%80%83.png"><br>大量的人类对局数据是非常重要的，因为预训练完的agent智能体已经能够达到前16%的人类玩家的水平了，从论文消融实验看离开了预训练几乎很难训练出好的策略。  </p>
+<h2 id="基于人类反馈的强化学习RLHF"><a href="#基于人类反馈的强化学习RLHF" class="headerlink" title="基于人类反馈的强化学习RLHF"></a>基于人类反馈的强化学习RLHF</h2><p><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3.png"><br>以语言模型为例，大部分采用了自回归生成的方式，通过递归解码的方式逐字或者逐词的产生内容，训练过程通常依赖于简单的根据上下文信息预测下一个词，然后用交叉熵计算每个词的损失，但这种以taken为单位的损失不能从全局视角有效地指导模型的优化。为了更加全局的评估模型的输出质量，常常使用BLEU、ROUGE等评价指标来衡量模型输入与人类偏好的一致性，然而这种做法仅仅用于评价结论，模型在训练的过程中并不能获取反应人类真实偏好的信息，因此在训练阶段直接使用人类的反馈来对模型的整体输出结果计算奖励或者损失更加合理。RLHF本质是训练一个奖励函数，这个奖励函数能投解释和预测人类给出的反馈从而引导强化学习算法的行为。和逆强化学习类似，两者都依赖于外部输入来学习奖励函数，只不过逆强化学习通常需要专家来演示，而RLHF可以使用非专家的更稀疏且噪声较大的反馈来进行学习。逆强化学习假设专家的行为是最优的，而RLHF不需要这个假设。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B.png"><br>RLHF的训练过程主要包括三个步骤，首先预训练语言模型，然后第二步收集数据并训练奖励模型，最后通过强化学习对原模型进行微调。第一步是人工编写问题prompt以及对应的答案，并使用这些数据对一个gpt3模型进行精细的调整，这一步可以训练出多个版本的模型；第二步先根据多个模型生成多个问题的答案，然后人工专家会根据某些标准比如可读性、正确性等等，对这些问题和答案进行排序并训练一个奖励模型用于评分，最后在微调阶段使用强化学习来加训上述经过微调的GPT3模型，具体采用的PPO算法，根据prompt生成答案，再用第二步训练的到的奖励模型进行打分。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%AD%A5%E9%AA%A4%E4%B8%80.png"><br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%AD%A5%E9%AA%A4%E4%BA%8C.png"><br>奖励模型可以看作是一种判别式的语言模型，可以使用一个预训练语言模型进行热启动。打分人员只对生成文本进行排序，不直接进行打分。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E6%AD%A5%E9%AA%A4%E4%B8%89.png"><br>策略就是基于语言模型接收prompt作为输入，输出一系列的文本或者是文本的概率分布，动作空间就是全词表。两个对比模型的输出不能差太多，这会导致训练的步子太大，因此在损失函数中添加一个KL散度的约束项，用KL散度作为惩罚项。整体训练如下：首先采样预先收集的prompt数据做输入，同时喂给初始的语言模型和当前训练中的语言模型，得到两个模型的输出y1和y2，然后用奖励模型RM对y1和y2进行打分判断谁更优秀，打分的差值作为训练策略模型参数的信号，通过KL散度来计算奖励或者惩罚的大小，最后根据PPO来更新模型的参数。<br><img src="/./%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RLHF%E5%B1%80%E9%99%90.png"><br>大模型训练项目:<a target="_blank" rel="noopener" href="https://github.com/hiyouga/LLaMA-Factory?tab=readme-ov-file">LLaMA-Efficient-Tuning</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kongxin
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kongxinhub.github.io/project/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html" title="强化学习笔记">https://kongxinhub.github.io/project/强化学习笔记.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html" rel="prev" title="c++学习笔记">
+                  <i class="fa fa-angle-left"></i> c++学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kongxin</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"kongxinhub","repo":"kxtalk","client_id":"Ov23liF92RyBCz8lpgux","client_secret":"f649a253ec9e0b1bfc50c8c205ba6df82b3b2057","admin_user":"kongxinhub","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"aa734980d5e7e84d1eb3c516a80bb1b5"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>
